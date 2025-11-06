@@ -11,7 +11,7 @@ Welcome to the 3D-PDR documentation!
    :caption: Contents:
 
    intro
-   3dpdr
+   installation
 
 
 Indices and tables
