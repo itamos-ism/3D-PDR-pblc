@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgraded 3D-PDR (2025) &mdash; ITAMOS-ISM  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to ITAMOS-ISM’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            ITAMOS-ISM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Upgraded 3D-PDR (2025)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installing-cmake">Installing <code class="docutils literal notranslate"><span class="pre">cmake</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installing-sundials-7-0-0">Installing SUNDIALS 7.0.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installing-3d-pdr">Installing 3D-PDR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compile-the-code-and-run-a-test-model">Compile the code and run a test model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-makefile">The <code class="docutils literal notranslate"><span class="pre">makefile</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#first-section-compiler-options">First section (compiler options)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#second-section-chemistry-options">Second section (chemistry options)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-params-dat">The <code class="docutils literal notranslate"><span class="pre">params.dat</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-output-densities">Input/Output - Densities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pdr-parameters">PDR parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-softened-power-law-cosmic-ray-attenuation">Using the softened-power-law cosmic ray attenuation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ray-tracing-ode-solver-chemistry-iteration-parameters">Ray-tracing, ODE Solver, Chemistry iteration parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thermal-balance-values">Thermal balance values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#coolant-files">Coolant files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#constructing-initial-conditions">Constructing initial conditions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#one-dimensional-density-functions">One-dimensional density functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#three-dimensional-density-distributions">Three-dimensional density distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#changing-initial-elemental-abundances">Changing initial elemental abundances</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#including-more-coolants">Including more coolants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#understanding-and-plotting-the-outputs">Understanding and plotting the outputs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#one-dimensional-outputs">One-dimensional outputs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#output-pdr-fin"><code class="docutils literal notranslate"><span class="pre">OUTPUT.pdr.fin</span></code>:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-cool-fin"><code class="docutils literal notranslate"><span class="pre">OUTPUT.cool.fin</span></code>:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-heat-fin"><code class="docutils literal notranslate"><span class="pre">OUTPUT.heat.fin</span></code>:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#three-dimensional-outputs">Three-dimensional outputs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-radiative-transfer-algorithm-rttool">The radiative transfer algorithm RTtool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-paramsrt-dat">The <code class="docutils literal notranslate"><span class="pre">paramsRT.dat</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-output-rt-pdr-prefix-dat">The output <code class="docutils literal notranslate"><span class="pre">RT_[PDR-prefix].dat</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#the-py3dpdr-python-wrapper">The <code class="docutils literal notranslate"><span class="pre">py3DPDR</span></code> python wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compile-the-3d-pdr-code-pdr-makefile">Compile the 3D-PDR code: <code class="docutils literal notranslate"><span class="pre">pdr.makefile()</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#create-initial-conditions-pdr-ics">Create initial conditions: <code class="docutils literal notranslate"><span class="pre">pdr.ics()</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#specify-the-initial-chemical-abundances-pdr-species">Specify the initial chemical abundances: <code class="docutils literal notranslate"><span class="pre">pdr.species()</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#prepare-the-params-dat-file-pdr-params">Prepare the params.dat file: <code class="docutils literal notranslate"><span class="pre">pdr.params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-pdr-results-pdr-plot">Plot PDR results: <code class="docutils literal notranslate"><span class="pre">pdr.plot()</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-1">Example 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-2">Example 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-3">Example 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-4">Example 4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#general-example">General example</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ITAMOS-ISM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Upgraded 3D-PDR (2025)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/3dpdr.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="upgraded-3d-pdr-2025">
+<h1>Upgraded 3D-PDR (2025)<a class="headerlink" href="#upgraded-3d-pdr-2025" title="Permalink to this heading"></a></h1>
+<p>To install 3D-PDR, you will first need to install SUNDIALS (version
+7.0.0). You will need <code class="docutils literal notranslate"><span class="pre">gfortran</span></code> and <code class="docutils literal notranslate"><span class="pre">gcc</span></code> compilers, as well as
+<code class="docutils literal notranslate"><span class="pre">cmake</span></code>. Before continuing, create a directory to do all the below
+installations, e.g. <code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span>
+<span class="gp">$ </span>mkdir<span class="w"> </span>PDRmodels
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>PDRmodels
+</pre></div>
+</div>
+<p>You can now compile, create initial conditions and run 3D-PDR using the
+python wrapper <code class="docutils literal notranslate"><span class="pre">py3DPDR.py</span></code>. It is strongly recommended that you first
+install and run the code in a terminal before you use the python
+wrapper. If you have already done that, you can read the <a class="reference external" href="#python-wrapper">Python
+wrapper</a> manual on how to use it.</p>
+<ul class="simple">
+<li><p>Summary</p>
+<ul>
+<li><p><cite>Installing ``cmake`</cite> &lt;#installing-cmake&gt;`__</p></li>
+<li><p><a class="reference external" href="#sundials">Installing SUNDIALS 7.0.0</a></p></li>
+<li><p><a class="reference external" href="#3DPDR">Installing 3D-PDR</a></p></li>
+<li><p><cite>The ``makefile`</cite> &lt;#the-makefile&gt;`__</p></li>
+<li><p><cite>The ``params.dat`</cite> &lt;#params&gt;`__</p></li>
+<li><p><a class="reference external" href="#constructing-initial-conditions">Constructing initial
+conditions</a></p></li>
+<li><p><a class="reference external" href="#changing-initial-elemental-abundances">Changing initial elemental
+abundances</a></p></li>
+<li><p><a class="reference external" href="#including-more-coolants">Including more coolants</a></p></li>
+<li><p><a class="reference external" href="#understanding-and-plotting-the-outputs">Understanding and plotting the
+outputs</a></p></li>
+<li><p><cite>The radiative transfer algorithm
+``RTtool`</cite> &lt;#the-radiative-transfer-algorithm-rttool&gt;`__</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="installing-cmake">
+<h1>Installing <code class="docutils literal notranslate"><span class="pre">cmake</span></code><a class="headerlink" href="#installing-cmake" title="Permalink to this heading"></a></h1>
+<p>Check if you have already <code class="docutils literal notranslate"><span class="pre">cmake</span></code>. If you do, go directly to the next
+Section.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code>, download <code class="docutils literal notranslate"><span class="pre">cmake</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>wget<span class="w"> </span>https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0-linux-x86_64.tar.gz
+</pre></div>
+</div>
+<p>Extract the tarball:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>cmake-3.23.0-linux-x86_64.tar.gz
+</pre></div>
+</div>
+<p>Move the extracted directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mv<span class="w"> </span>cmake-3.23.0-linux-x86_64<span class="w"> </span>/opt/cmake-3.23.0
+</pre></div>
+</div>
+<p>Create a symbolic link:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ln<span class="w"> </span>-sf<span class="w"> </span>/opt/cmake-3.23.0/bin<span class="w"> </span>/usr/bin/
+</pre></div>
+</div>
+<p>Verify the <code class="docutils literal notranslate"><span class="pre">cmake</span></code> version:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>--version
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-sundials-7-0-0">
+<h1>Installing SUNDIALS 7.0.0<a class="headerlink" href="#installing-sundials-7-0-0" title="Permalink to this heading"></a></h1>
+<p>Clone the Sundials repository:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/LLNL/sundials.git<span class="w"> </span>sundials-7.0.0
+</pre></div>
+</div>
+<p>Create and navigate to the build directory:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>sundials-7.0.0/build
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>sundials-7.0.0/build
+</pre></div>
+</div>
+<p>Configure Sundials with <code class="docutils literal notranslate"><span class="pre">cmake</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cmake<span class="w"> </span>-DCMAKE_INSTALL_PREFIX<span class="o">=</span>/YOUR-HOMEPATH/PDRmodels/sundials<span class="w"> </span>../
+</pre></div>
+</div>
+<p>Build and install SUNDIALS</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
+<span class="gp">$ </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>Edit the <code class="docutils literal notranslate"><span class="pre">rc</span></code> file of your shell e.g. <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> in your home
+directory and include the following commands</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">export LD_LIBRARY_PATH=/home/tbisbas/data/Codes/3D-PDR_sundials7/sundials/lib</span>
+<span class="go">export SUNDIALS_DIR=/home/tbisbas/data/Codes/3D-PDR_sundials7/sundials</span>
+</pre></div>
+</div>
+<p>and then either type <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bashrc</span></code> or close this terminal and
+open a new one. If you use different shell, you will need to adjust the
+above commands accordingly.</p>
+</div>
+<div class="section" id="installing-3d-pdr">
+<h1>Installing 3D-PDR<a class="headerlink" href="#installing-3d-pdr" title="Permalink to this heading"></a></h1>
+<p>In the directory <code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code> extract the <code class="docutils literal notranslate"><span class="pre">3DPDR.tgz</span></code></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>~/PDRmodels/
+<span class="gp">$ </span>tar<span class="w"> </span>xvzf<span class="w"> </span>3DPDR.tgz
+</pre></div>
+</div>
+<p>Advance in the <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>3D-PDR-main/src
+</pre></div>
+</div>
+<div class="section" id="compile-the-code-and-run-a-test-model">
+<h2>Compile the code and run a test model<a class="headerlink" href="#compile-the-code-and-run-a-test-model" title="Permalink to this heading"></a></h2>
+<p>To compile the code, you will need to edit the <code class="docutils literal notranslate"><span class="pre">config.mk</span></code> and adjust
+the <code class="docutils literal notranslate"><span class="pre">F90</span></code> (for Fortran) and <code class="docutils literal notranslate"><span class="pre">CC</span></code> (for C++) compilers accordingly.
+For Mac users: it is possible that the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> will fail if you
+have <code class="docutils literal notranslate"><span class="pre">conda</span></code> activated. It is recommended to type
+<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">deactivated</span></code> before compiling 3D-PDR.</p>
+<p>You are now ready to compile 3D-PDR for the first time! While still
+within the <code class="docutils literal notranslate"><span class="pre">src/</span></code> directory, type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>make
+</pre></div>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> has been executed without issues, you will see the
+<code class="docutils literal notranslate"><span class="pre">3DPDR</span></code> executable in the <code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code> directory. You are now
+ready to perform the first model. This default model is for benchmarking
+purposes only to ensure that installation has been properly done. To run
+a model, simply type:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./3DPDR
+</pre></div>
+</div>
+<p>and within just a few seconds (depending on your machine) the test model
+will finish. You can check whether the run is successful by plotting the
+gas temperature versus visual extinction against the benchmark model
+that is already run. With a plotting tool, simply compare columns 3
+(visual extinction, first column is 1) and 4 (gas temperature) of the
+file <code class="docutils literal notranslate"><span class="pre">sims/test.pdr.fin</span></code> (your model) against the same columns of the
+<code class="docutils literal notranslate"><span class="pre">benchmark/model.pdr.fin</span></code> (the benchmarking model). For instance, in
+<code class="docutils literal notranslate"><span class="pre">gnuplot</span></code> the command should be</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">set log</span>
+<span class="go">plot &#39;sims/test.pdr.fin&#39; u 3:4 w l t &#39;my model&#39;, &#39;benchmark/model.pdr.fin&#39; u 3:4 w l t &#39;benchmark&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-makefile">
+<h1>The <code class="docutils literal notranslate"><span class="pre">makefile</span></code><a class="headerlink" href="#the-makefile" title="Permalink to this heading"></a></h1>
+<p>The main flags of the code are specified in the <code class="docutils literal notranslate"><span class="pre">config.mk</span></code> file. This
+is then called in <code class="docutils literal notranslate"><span class="pre">makefile</span></code>. In <code class="docutils literal notranslate"><span class="pre">config.mk</span></code>, flags can be divided
+in two main sections. The first section are options for the compiler.
+The second section are options for the chemistry and the density
+distribution.</p>
+<div class="section" id="first-section-compiler-options">
+<h2>First section (compiler options)<a class="headerlink" href="#first-section-compiler-options" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">F90               = gfortran</span>
+<span class="go">CC                = gcc-14</span>
+<span class="go">CPPFLAGS          = -cpp</span>
+<span class="go">SUNDIALS          = 7.0</span>
+<span class="go">OPENMP            = 1</span>
+<span class="go">OPTIMISE          = 3</span>
+<span class="go">PYWRAP            = 0</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">F90</span></code> specifies the fortran compiler. The default compiler is
+<code class="docutils literal notranslate"><span class="pre">gfortran</span></code>. No other Fortran compilers have been tested yet, so
+change this only if you are willing to solve possible bugs yourself.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CC</span></code> specifies the gcc compiler. For Mac users, check the
+<code class="docutils literal notranslate"><span class="pre">gcc-14</span></code> or <code class="docutils literal notranslate"><span class="pre">mp-gcc-14</span></code> compilers instead of the <code class="docutils literal notranslate"><span class="pre">gcc</span></code>. <em>It is
+strongly recommended to use gcc versions &gt;7.3.0.</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CPP</span></code> flag is set to <code class="docutils literal notranslate"><span class="pre">-cpp</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SUNDIALS</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">7.0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OPENMP</span></code> specifies whether the code will run in parallel (flag 1)
+or in serial (flag 0). It is recommended always to use <code class="docutils literal notranslate"><span class="pre">OPENMP</span> <span class="pre">=</span> <span class="pre">1</span></code>
+unless you have a reason.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OPTIMISE</span></code> specifies the optimisation of the compiler. In general,
+flags 0 and 1 are used for development and debugging purposes. Flags
+2 and 3 are used for running models. It is recommended to have
+<code class="docutils literal notranslate"><span class="pre">OPTIMISE</span> <span class="pre">=</span> <span class="pre">3</span></code> for running your models. There exists a flag 4, but
+it is not recommended to use as it lowers the precision and the code
+may crash.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PYWRAP</span></code> should be used for the <cite>python wrapper
+``py3DPDR.py`</cite> &lt;#python-wrapper&gt;`__</p></li>
+</ul>
+</div>
+<div class="section" id="second-section-chemistry-options">
+<h2>Second section (chemistry options)<a class="headerlink" href="#second-section-chemistry-options" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DIMENSIONS        = 1</span>
+<span class="go">RAYTHEIA          = 0</span>
+<span class="go">RAYTHEIA_MO       = 0</span>
+<span class="go">XYZ               = 0</span>
+<span class="go">NETWORK           = REDUCED</span>
+<span class="go">XRAYS             = 0</span>
+<span class="go">DUST              = HTT91</span>
+<span class="go">GUESS_TEMP        = 1</span>
+<span class="go">THERMALBALANCE    = 1</span>
+<span class="go">FORCECONVERGENCE  = 1</span>
+<span class="go">GRAINRECOMB       = 0</span>
+<span class="go">SUPRATHERMAL      = 0</span>
+<span class="go">H2FORM            = CT02</span>
+<span class="go">CRATTENUATION     = 0</span>
+<span class="go">RESTART           = 0</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span></code> specifies the density distribution you would like to
+run. If it is an one-dimensional model, set <code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">1</span></code>. For
+three-dimensional models, set <code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">3</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RAYTHEIA</span></code> is the new ray-tracing algorithm implemented for
+three-dimensional models in 3D-PDR. It is a self-consisted algorithm
+and performs extremely fast ray-tracing to calculate column
+densities, line emission and escape probability in 3D. Set
+<code class="docutils literal notranslate"><span class="pre">RAYTHEIA</span> <span class="pre">=</span> <span class="pre">1</span></code> to switch it on (works <em>only</em> for
+<code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">3</span></code>). If you set <code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">3</span></code> and
+<code class="docutils literal notranslate"><span class="pre">RAYTHEIA</span> <span class="pre">=</span> <span class="pre">0</span></code>, the code will compile with the original ray-tracing
+method presented in Bisbas+12. The latter is a much slower
+ray-tracing algorithm with a high memory consumption. For
+one-dimensional models, you will always need <code class="docutils literal notranslate"><span class="pre">RAYTHEIA</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RAYTHEIA_MO</span></code> allows to perform ray-tracing on-the-fly, reducing
+the total RAM consumption. However it increases the CPU runtime by at
+least 30%. This flag is ideal for higher resolution models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">XYZ</span></code> specifies the format of the 3D density distribution (for
+<code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">1</span></code> use <code class="docutils literal notranslate"><span class="pre">XYZ</span> <span class="pre">=</span> <span class="pre">0</span></code> always). For <code class="docutils literal notranslate"><span class="pre">XYZ</span> <span class="pre">=</span> <span class="pre">0</span></code> the file
+is created in a xyz format with z changing first. For <code class="docutils literal notranslate"><span class="pre">XYZ</span> <span class="pre">=</span> <span class="pre">1</span></code>,
+the file is created in a xyz format with x changing first. See
+Section “Constructing initial conditions” below for more information.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NETWORK</span></code> specifies the chemical network of the model based on the
+UMIST database. There are three possibilities in this version: 1)
+<code class="docutils literal notranslate"><span class="pre">NETWORK</span> <span class="pre">=</span> <span class="pre">REDUCED</span></code> consists of 33 species and 331 reactions, 2)
+<code class="docutils literal notranslate"><span class="pre">NETWORK</span> <span class="pre">=</span> <span class="pre">MEDIUM</span></code> consists of 77 species and 1158 reactions
+(written by B. Gaches), 3) <code class="docutils literal notranslate"><span class="pre">NETWORK</span> <span class="pre">=</span> <span class="pre">FULL</span></code> consists of 215 species
+and 2926 reactions. The higher the complexity of the network, the
+slower the code becomes. For 3D runs, a more complex network comes at
+an extra RAM cost.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">XRAYS</span></code> includes X-ray chemistry. This is currently under
+development and works in limited cases only for
+<code class="docutils literal notranslate"><span class="pre">NETWORK</span> <span class="pre">=</span> <span class="pre">REDUCED</span></code>. It is not recommended to do X-ray chemistry
+with this version of the code, so use <code class="docutils literal notranslate"><span class="pre">XRAYS</span> <span class="pre">=</span> <span class="pre">0</span></code> at all times.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DUST</span></code> specifies the way dust temperature is treated. There are two
+possibilities: 1) <code class="docutils literal notranslate"><span class="pre">DUST</span> <span class="pre">=</span> <span class="pre">HTT91</span></code> using the treatment presented in
+Hollenbach, Takahashi &amp; Tielens (1991) -default flag-, and 2)
+<code class="docutils literal notranslate"><span class="pre">DUST</span> <span class="pre">=</span> <span class="pre">0</span></code> used if you would like to perform isothermal dust runs.
+If you use <code class="docutils literal notranslate"><span class="pre">DUST</span> <span class="pre">=</span> <span class="pre">0</span></code>, you will need to specify the value of the
+dust temperature in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file (see below).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span></code> refers to the initial gas temperature the code uses to
+start iterations. For <code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span> <span class="pre">=</span> <span class="pre">1</span></code> the code uses an approximate
+function based on the FUV intensity (discussed in Bisbas+ 12). For
+<code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span> <span class="pre">=</span> <span class="pre">0</span></code> the code uses a uniform gas temperature throughout
+all cloud. The recommended flag is <code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span> <span class="pre">=</span> <span class="pre">1</span></code> as this reduced
+the total number of iterations and minimizes errors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">THERMALBALANCE</span></code> specifies whether your PDR model will converge due
+to therma balance (<code class="docutils literal notranslate"><span class="pre">THERMALBALANCE</span> <span class="pre">=</span> <span class="pre">1</span></code>) <em>or</em> if it is a simple
+isothermal model (<code class="docutils literal notranslate"><span class="pre">THERMALBALANCE</span> <span class="pre">=</span> <span class="pre">0</span></code>). If the second case is
+selected, you will need to have <code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span> <span class="pre">=</span> <span class="pre">0</span></code> as well. The value
+of the gas temperature in isothermal runs is specified in the
+<code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file (see below).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FORCECONVERGENCE</span></code> helps the code to converge fast by restricting
+the change of values after a number of iterations. It is recommended
+to have <code class="docutils literal notranslate"><span class="pre">FORCECONVERGENCE</span> <span class="pre">=</span> <span class="pre">1</span></code> at all times, unless you know what
+you do (so setting it to 0).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GRAINRECOMB</span></code> switches on (<code class="docutils literal notranslate"><span class="pre">GRAINRECOMB</span> <span class="pre">=</span> <span class="pre">1</span></code>) the routine to
+consider electron recombination on dust grains (see Weingartner &amp;
+Draine 2001, ApJ, 563, 842). For <code class="docutils literal notranslate"><span class="pre">GRAINRECOMB</span> <span class="pre">=</span> <span class="pre">0</span></code> the routine is
+switched off. There are some known issues (not fixed) when using this
+flag for the FULL chemical network.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span></code> switches on (<code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span> <span class="pre">=</span> <span class="pre">1</span></code>) the suprathermal
+formation of CO via CH+ (see Visser+ 09; Bisbas+ 19). The values of
+Av critical (at which this formation pathway ceases to be important)
+and the Alfven velocity are specified in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file (see
+below).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">H2FORM</span></code> specifies the H2 formation recipe. There are three flags
+available: 1) <code class="docutils literal notranslate"><span class="pre">H2FORM</span> <span class="pre">=</span> <span class="pre">CT02</span></code> for the Cazaux &amp; Tielens (2002, 2004)
+treatment, 2) <code class="docutils literal notranslate"><span class="pre">H2FORM</span> <span class="pre">=</span> <span class="pre">SIMPLE</span></code> for a simpler function (see
+<code class="docutils literal notranslate"><span class="pre">makefile</span></code> comments), and 3) <code class="docutils literal notranslate"><span class="pre">H2FORM</span> <span class="pre">=</span> <span class="pre">R07</span></code> for the H2 formation
+function used in the Roellig+ (2007) benchmarking paper.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CRATTENUATION</span></code> calculates attenuation of cosmic-rays (both for
+<code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">3</span></code>). There are two options available. For
+<code class="docutils literal notranslate"><span class="pre">CRATTENUATION=1</span></code>, the user can use the L and H models of Padovani
+et al (2018). For <code class="docutils literal notranslate"><span class="pre">CRATTENUATION</span> <span class="pre">=</span> <span class="pre">1</span></code>, you will need to replace the
+cosmic-ray ionizaion rate value in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> by either
+<code class="docutils literal notranslate"><span class="pre">L</span></code>, <code class="docutils literal notranslate"><span class="pre">l</span></code> (for the Low model) or <code class="docutils literal notranslate"><span class="pre">H</span></code>, <code class="docutils literal notranslate"><span class="pre">h</span></code> (for the High
+model). For <code class="docutils literal notranslate"><span class="pre">CRATTENUATION=2</span></code>, the use can use a softened power-law
+attenuation curve which takes the form
+<code class="docutils literal notranslate"><span class="pre">zeta(N)</span> <span class="pre">=</span> <span class="pre">zeta0</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">N/N0)**alpha</span></code>. There are three parameters
+used for this model, replacing the CRIR, in line order <code class="docutils literal notranslate"><span class="pre">zeta0</span></code>,
+<code class="docutils literal notranslate"><span class="pre">N0</span></code>, <code class="docutils literal notranslate"><span class="pre">alpha</span></code>. For <code class="docutils literal notranslate"><span class="pre">CRATTENUATION</span> <span class="pre">=</span> <span class="pre">0</span></code>, you simply specify the
+value of the CR ionization rate which is treated as a constant value
+for all depth points.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RESTART</span></code> allows to continue an interrupted model
+(<code class="docutils literal notranslate"><span class="pre">RESTART</span> <span class="pre">=</span> <span class="pre">1</span></code>). This is particularly useful for large 3D models
+rather than 1D. The default value is <code class="docutils literal notranslate"><span class="pre">RESTART</span> <span class="pre">=</span> <span class="pre">0</span></code> (switched off).
+Once activated, <code class="docutils literal notranslate"><span class="pre">RESTART</span></code> writes the file <code class="docutils literal notranslate"><span class="pre">restart.bin</span></code> in binary
+format in the directory where <code class="docutils literal notranslate"><span class="pre">3DPDR</span></code> is executed. If you are lucky
+enough for your model to stop due to external factors (power cut,
+exceed of wall time), you can simply re-run it without any further
+change. IMPORTANT: for any completely new model, you <em>must</em> delete
+<code class="docutils literal notranslate"><span class="pre">restart.bin</span></code> if it already exists from your previous run. The
+<code class="docutils literal notranslate"><span class="pre">RESTART</span></code> function operates only for <code class="docutils literal notranslate"><span class="pre">THERMALBALANCE</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-params-dat">
+<h1>The <code class="docutils literal notranslate"><span class="pre">params.dat</span></code><a class="headerlink" href="#the-params-dat" title="Permalink to this heading"></a></h1>
+<p>In the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file the user specifies the input-output prefixes,
+the PDR environmental parameters, thermal balance options, coolants and
+other technical parameters. Below, the default parameters are explained.
+The user is free to change those for their PDR models.</p>
+<p>Users can also define their own parameter file, i.e. <code class="docutils literal notranslate"><span class="pre">paramsUser.dat</span></code>,
+which can be passed to 3DPDR using command line options <code class="docutils literal notranslate"><span class="pre">-p=</span></code> or
+<code class="docutils literal notranslate"><span class="pre">--params</span></code>. For example, to use this parameter file, one would call
+3DPDR as <code class="docutils literal notranslate"><span class="pre">./3DPDR</span> <span class="pre">-p=paramsUser.dat</span></code>. The parameter file name can only
+be 50 characters long.</p>
+<div class="section" id="input-output-densities">
+<h2>Input/Output - Densities<a class="headerlink" href="#input-output-densities" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">===========================|-------------------------</span>
+<span class="go">Input/Output - Densities   |    ~~~ COMMENTS ~~~</span>
+<span class="go">===========================|-------------------------</span>
+<span class="go">ics                        !ICs directory</span>
+<span class="go">1Dn30.dat                  !ICs file</span>
+<span class="go">sims                       !Output directory</span>
+<span class="go">test                       !Output prefix</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ics</span></code> is the directory of the initial conditions. All density
+distributions are included in that directory. See below how to
+construct 1D and 3D data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1Dn30.dat</span></code> is the input file for the 1D density distribution. This
+particular file is a uniform density cloud with n=1e3 cm-3 and a
+visual extinction of Av=10mag. It has been constructed with 30 points
+per Av dex.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sims</span></code> is the output directory of the models.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code> is the prefix of the default PDR model. After running the
+code, there will be various files of that prefix saved in <code class="docutils literal notranslate"><span class="pre">sims/</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">sims/test.pdr.fin</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="pdr-parameters">
+<h2>PDR parameters<a class="headerlink" href="#pdr-parameters" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">===========================|</span>
+<span class="go">PDR parameters             |</span>
+<span class="go">===========================|</span>
+<span class="go">10                         !G0 (in Draine field units) -x to +x in 1D</span>
+<span class="go">1.0E-16                    !Cosmic-ray ionization rate (s^-1)</span>
+<span class="go">0.0                        !Xray flux (erg/cm2/s)</span>
+<span class="go">1.0                        !Dust-to-gas normalized to 1e-2</span>
+<span class="go">1.0                        !Turbulent velocity (km/s)</span>
+<span class="go">1e7                        !End time (yr)</span>
+<span class="go">1.0E-5                     !Grain radius (cm)</span>
+<span class="go">6.289e-22                  !Av conversion factor</span>
+<span class="go">3.02                       !UV factor</span>
+<span class="go">0                          !Redshift (for CMB temperature)</span>
+<span class="go">0.7                        !Av critical (SUPRATHERMAL switch)</span>
+<span class="go">3.3                        !Alfven velocity (km/s) (SUPRATHERMAl switch)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">10</span></code> is the intensity of the FUV radiation field normalized to the
+spectral shape of Draine (1978). For <code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">1</span></code>, this is an
+one-sided radiation field. For <code class="docutils literal notranslate"><span class="pre">DIMENSIONS</span> <span class="pre">=</span> <span class="pre">3</span></code>, this corresponds
+to the intensity of an isotropic radiation field. For the 12-ray
+HEALPix structure, this means that for each ray an intensity field of
+10/12 is calculated, so that the total intensity of the cell assuming
+no attenuation is 10.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0E-16</span></code> is the value of the cosmic-ray ionization rate (in s-1).
+In this version, the cosmic-ray ionization rate is fixed everywhere
+in the cloud.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.0</span></code> is the X-ray flux (in erg/cm2/s) for X-ray models. It is
+recommended not to change this value in this version.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code> is the dust-to-gas ratio normalized to 1e-2. There is no
+<code class="docutils literal notranslate"><span class="pre">metallicity</span></code> parameter in this version. For metallicities other
+than the solar (default), the user must change this value <em>and</em>
+specify the elemental abundances separately (see below).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0</span></code> is the microtubulent velocity (in km/s) controlling the
+turbulent heating.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1e7</span></code> is the end chemical time (in yr). It is set to 10Myr to
+ensure that chemical balance has been reached. The user can change
+this for more advanced studies concerning young clouds.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1.0E-05</span></code> is the assumed grain radius (in cm).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">6.289e-22</span></code> is the visual extinction conversion factor (taken from
+the Roellig+07 benchmarking paper).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3.02</span></code> is a factor used for the attenuation of the UV radiation
+(taken from the Roellig+07 benchmarking paper).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code> is the redshift. This value controls the CMB temperature</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.7</span></code> is the critical Av for the <code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span> <span class="pre">=</span> <span class="pre">1</span></code> switch. This
+is the value of the Av above which the suprathermal formation of CO
+via CH+ ceases to be important. If the code is compiled with
+<code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span> <span class="pre">=</span> <span class="pre">0</span></code>, this value is not accounted for.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">3.3</span></code> is the Alfven velocity (in km/s) for the <code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span> <span class="pre">=</span> <span class="pre">1</span></code>
+switch. If the code is compiled with <code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span> <span class="pre">=</span> <span class="pre">0</span></code>, this value
+is not accounted for.</p></li>
+</ul>
+<div class="section" id="using-the-softened-power-law-cosmic-ray-attenuation">
+<h3>Using the softened-power-law cosmic ray attenuation<a class="headerlink" href="#using-the-softened-power-law-cosmic-ray-attenuation" title="Permalink to this heading"></a></h3>
+<p>If using the softened-power-law cosmic ray attenuation, the first lines
+of the params file would be formatted such as this</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>===========================|
+PDR parameters             |
+===========================|
+10                         !G0 (in Draine field units) -x to +x in 1D
+1.0E-16                    !Surface cosmic-ray ionization rate, zeta0 (s^-1)
+1.0E21                     !Normalizing column density, N0
+-1.0                       !Attenuation slope, alpha
+.... continued as normal
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ray-tracing-ode-solver-chemistry-iteration-parameters">
+<h2>Ray-tracing, ODE Solver, Chemistry iteration parameters<a class="headerlink" href="#ray-tracing-ode-solver-chemistry-iteration-parameters" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">===========================|</span>
+<span class="go">Ray-tracing parameters     |</span>
+<span class="go">===========================|</span>
+<span class="go">0                          !HEALPix level of refinement</span>
+<span class="go">1.3                        !Theta critical (0&lt;phi&lt;pi/2)</span>
+<span class="go">===========================|</span>
+<span class="go">ODE Solver parameters      |</span>
+<span class="go">===========================|</span>
+<span class="go">1.0D-8                     !relative abundance tolerance</span>
+<span class="go">1.0D-30                    !absolute abundance tolerance</span>
+<span class="go">===========================|</span>
+<span class="go">Chemistry iterations       |</span>
+<span class="go">===========================|</span>
+<span class="go">8                          !First set of Chemical Iterations</span>
+<span class="go">6000                       !Total iterations</span>
+</pre></div>
+</div>
+<p>It is recommended not to change the values of these sections, unless you
+know what you are doing.</p>
+</div>
+<div class="section" id="thermal-balance-values">
+<h2>Thermal balance values<a class="headerlink" href="#thermal-balance-values" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">===========================|</span>
+<span class="go">Thermal balance values     |</span>
+<span class="go">===========================|</span>
+<span class="go">40.0                       !Gas temperature for isothermal models</span>
+<span class="go">10.0                       !Floor temperature (if &lt;Tcmb it&#39;s set to Tcmb)</span>
+<span class="go">30000.0                    !Maximum allowed gas temperature</span>
+<span class="go">20.0                       !Dust temperature for isothermal dust models</span>
+<span class="go">0.005                      !Fcrit (% Accuracy)</span>
+<span class="go">0.01                       !Tdiff (maximum temperature difference)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">40.0</span></code> is the gas temperature used in isothermal models (for which
+you need to set <code class="docutils literal notranslate"><span class="pre">THERMALBALANCE</span> <span class="pre">=</span> <span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">GUESS_TEMP</span> <span class="pre">=</span> <span class="pre">0</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">makefile</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">10.0</span></code> is the floor gas temperature below which the code does not
+allow the gas to cool further. If the floor temperature is below the
+CMB temperature (at any given redshift), the code will automatically
+select the CMB temperature as the floor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">30000.0</span></code> maximum allowed gas temperature in the PDR model. It is
+recommended not to change this value.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">20.0</span></code> is the dust temperature used in isothermal dust models (for
+which <code class="docutils literal notranslate"><span class="pre">DUST</span> <span class="pre">=</span> <span class="pre">0</span></code> in the <code class="docutils literal notranslate"><span class="pre">makefile</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.005</span></code> controls the thermal balance accuracy. Change this value
+only if you know what you are doing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0.01</span></code> is the maximum temperature diffence used in thermal balance
+iterations to control the accuracy. Change this value only if you
+know what you are doing.</p></li>
+</ul>
+</div>
+<div class="section" id="coolant-files">
+<h2>Coolant files<a class="headerlink" href="#coolant-files" title="Permalink to this heading"></a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">===========================|</span>
+<span class="go">Coolant files              |Leiden Lambda format</span>
+<span class="go">===========================|</span>
+<span class="go">12co.dat                   !CO Do not change the following order</span>
+<span class="go">12c+.dat                   !CII</span>
+<span class="go">12c.dat                    !CI</span>
+<span class="go">16o.dat                    !OI</span>
+</pre></div>
+</div>
+<p>The default list of coolants is as shown above. The user is recommended
+<em>not</em> to change this order. It is possible to include additional
+coolants, depending on the chemical network used in the <code class="docutils literal notranslate"><span class="pre">makefile</span></code>. To
+do that, simply add the file(s) of the coolant(s) at the end of the
+<code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file, below <code class="docutils literal notranslate"><span class="pre">16o.dat</span></code>. The more coolants included, the
+slower becomes the code. See relevant section below how to include more
+coolants.</p>
+</div>
+</div>
+<div class="section" id="constructing-initial-conditions">
+<h1>Constructing initial conditions<a class="headerlink" href="#constructing-initial-conditions" title="Permalink to this heading"></a></h1>
+<p>To run a PDR model, you will need to construct the density distribution
+of the cloud. Once you create an initial conditions file, you can store
+it in the <code class="docutils literal notranslate"><span class="pre">ics/</span></code> directory for future use (no need to create initial
+conditions per PDR model). In the <code class="docutils literal notranslate"><span class="pre">ics/</span></code> directory, there are two
+files that will help you with this depending on the model you want to
+run. These are fortran files, however you can create your own density
+function with your own tools, as long as the input format is respected.</p>
+<div class="section" id="one-dimensional-density-functions">
+<h2>One-dimensional density functions<a class="headerlink" href="#one-dimensional-density-functions" title="Permalink to this heading"></a></h2>
+<p>The input format in one-dimensional runs is:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">x(pc), y(pc), z(pc), nH(cm-3)</span>
+</pre></div>
+</div>
+<p>with <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">0.0</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">0.0</span></code> set always. The spatial distribution is
+measured in units of pc, and the total H-nucleus number density in the
+fourth column in units of cm-3.</p>
+<p>For simple one-dimensional distributions, you can use the
+<code class="docutils literal notranslate"><span class="pre">uniform1D.f90</span></code> file. You will need to compile it using the following
+command</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>gfortran<span class="w"> </span>-o<span class="w"> </span>uniform1D<span class="w"> </span>uniform1D.f90
+</pre></div>
+</div>
+<p>and run it with <code class="docutils literal notranslate"><span class="pre">./uniform1D</span></code> (within the <code class="docutils literal notranslate"><span class="pre">ics/</span></code> directory). This is
+a simple and interactive algorithm that creates the uniform-density
+distribution. Below there is an example when you run it:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"> give number density [cm^-3] (e.g. 1000)</span>
+<span class="go">1000</span>
+<span class="go"> give avmax (e.g. 10)</span>
+<span class="go">10</span>
+<span class="go"> length [pc] =    5.15322113</span>
+<span class="go"> give log10(avmin) (e.g. -3)</span>
+<span class="go">-3</span>
+<span class="go"> give x-resolution (e.g. 30)</span>
+<span class="go">30</span>
+<span class="go"> file [outgrid.dat] written!</span>
+</pre></div>
+</div>
+<p>This will create the <code class="docutils literal notranslate"><span class="pre">outgrid.dat</span></code> containing a cloud with density of
+1000 cm-3, a maximum visual extinction of 10mag, a minimum visual
+extinction of 1e-3 (for resolving the HI-to-H2 transition) with 30
+points per Av dex. So the total number of points for this model is 122
+(including the first and last point). You can rename the <code class="docutils literal notranslate"><span class="pre">outgrid.dat</span></code>
+e.g. <code class="docutils literal notranslate"><span class="pre">1Dn30.dat</span></code>.</p>
+</div>
+<div class="section" id="three-dimensional-density-distributions">
+<h2>Three-dimensional density distributions<a class="headerlink" href="#three-dimensional-density-distributions" title="Permalink to this heading"></a></h2>
+<p>In the current version of 3D-PDR, ray-tracing is performed for a uniform
+grid of cells, the resolution of which must be a power of 2 e.g. 32^3,
+64^3, 128^3 etc. In principle, to run a 3D model you will need a density
+distribution generated by a hydrodynamical code, or a 3D density
+distribution function. However, to understand how such a file can be
+used in the code, you can experiment with the <code class="docutils literal notranslate"><span class="pre">build3D.f90</span></code> routine.
+This file is meant to be used as a guide to build your own 3D cloud. In
+its default version, it simply generates a sphere within a 32^3 box. The
+sphere has a radius of 5 pc, a density of 1000 cm-3 and it is within a
+box containing 32^3 cells. Each side of the box is 10pc. Cells that are
+not included withing the spherical radius of 5pc have a density of 0
+cm-3.</p>
+<p>The format of the 3D density file is similar to that of the 1D models
+described above. However, in the 3D case there is a header of two lines
+at the start of the file e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">32 32 32</span>
+<span class="go">10. 10. 10.</span>
+</pre></div>
+</div>
+<p>which give the number of cells in each side (integer number) as well as
+the physical size of the box (in pc).</p>
+<p>IMPORTANT: the box must start at (0,0,0) and expand along all positive
+x,y,z axes. For instance, if you cut a density distribution from a
+hydrodynamical model containing negative positions, you must shift the
+cloud to have positive coordinates starting at (0,0,0). Each x,y,z
+position in the initial conditions file represents the <em>centroid</em> of the
+cell (not its corners).</p>
+<p>When building a 3D cloud, you will need to make sure that the <code class="docutils literal notranslate"><span class="pre">XYZ</span></code>
+flag in the <code class="docutils literal notranslate"><span class="pre">makefile</span></code> follows the input format. Assuming that
+nH(i,j,k) is a given density function, for <code class="docutils literal notranslate"><span class="pre">XYZ</span> <span class="pre">=</span> <span class="pre">0</span></code>, the file is
+created in a xyz format with z changing first e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">do i = 1, itot</span>
+<span class="go">  do j = 1, itot</span>
+<span class="go">     do k = 1, itot</span>
+<span class="go">        write(1,*) x(i), y(j), z(k), nH(i,j,k)</span>
+<span class="go">     end do</span>
+<span class="go">  end do</span>
+<span class="go">end do</span>
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">XYZ</span> <span class="pre">=</span> <span class="pre">1</span></code>, the file is created in a xyz format with x changing
+first e.g.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">do k = 1, itot</span>
+<span class="go">  do j = 1, itot</span>
+<span class="go">     do i = 1, itot</span>
+<span class="go">        write(1,*) x(i), y(j), z(k), nH(i,j,k)</span>
+<span class="go">     end do</span>
+<span class="go">  end do</span>
+<span class="go">end do</span>
+</pre></div>
+</div>
+<p>There are two 3D files that come with the code to experiment the
+capabilities of 3D-PDR in modelling such structures. The first one is
+the <code class="docutils literal notranslate"><span class="pre">3Dsphere.dat</span></code> at 32^3 resoltuion. The second one is called
+<code class="docutils literal notranslate"><span class="pre">diffuse_64.dat'.</span> <span class="pre">It</span> <span class="pre">has</span> <span class="pre">a</span> <span class="pre">resolution</span> <span class="pre">of</span> <span class="pre">64^3</span> <span class="pre">and</span> <span class="pre">it</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">sub-region</span> <span class="pre">from</span> <span class="pre">an</span> <span class="pre">MHD</span> <span class="pre">run</span> <span class="pre">(Wu+</span> <span class="pre">17;</span> <span class="pre">Bisbas+</span> <span class="pre">21)</span> <span class="pre">representing</span> <span class="pre">the</span> <span class="pre">diffuse</span> <span class="pre">ISM.</span> <span class="pre">Both</span> <span class="pre">these</span> <span class="pre">files</span> <span class="pre">have</span> <span class="pre">a</span></code>XYZ
+= 0` format. To run the 64^3 with the REDUCED network, your machine
+must contain at least 16GB of RAM, otherwise you may experiment with the
+32^3 model.</p>
+</div>
+</div>
+<div class="section" id="changing-initial-elemental-abundances">
+<h1>Changing initial elemental abundances<a class="headerlink" href="#changing-initial-elemental-abundances" title="Permalink to this heading"></a></h1>
+<p>To change the initial elemental abundances, you will need to edit the
+<code class="docutils literal notranslate"><span class="pre">species_NETWORK.d</span></code> file found in the <code class="docutils literal notranslate"><span class="pre">chemfiles/</span></code> directory,
+according to the chemical network you use. You do not need to re-compile
+3D-PDR in case the only change you do is this.</p>
+</div>
+<div class="section" id="including-more-coolants">
+<h1>Including more coolants<a class="headerlink" href="#including-more-coolants" title="Permalink to this heading"></a></h1>
+<p>Adding a particular coolant is important if we are interested in
+studying its emission. For all coolants included, 3D-PDR outputs the
+level populations of all transitions which are then used in the
+<code class="docutils literal notranslate"><span class="pre">RTtool</span></code> to estimate the radiation temperature along the
+line-of-sight.</p>
+<p>It is now very simple to include coolants, in addition to the default
+ones of 12CO, C+, C, and 16O. In the <code class="docutils literal notranslate"><span class="pre">chemfiles/</span></code> you may identify the
+coolants you can add. To add them, you will need to ensure that the
+chemical network you use does contain the coolant of interest, and then
+add its filename at the end of the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file. And that’s it!
+If you are using the same chemical network, it is not necessary to
+re-compile the code if you add a new coolant in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code>.</p>
+<p>In case you would like to add a coolant that is not listed in the
+<code class="docutils literal notranslate"><span class="pre">chemfiles/</span></code> directory, you will need to download it from the LEIDEN
+LAMBDA database (or to construct your own following the LEIDEN LAMBDA
+format), and then make sure that the header of the file is modified as
+follows (here an example of the 16O as downloaded from the database, and
+after the changes needed):</p>
+<ul>
+<li><p>File directly from LEIDEN LAMBDA:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">!MOLECULE</span>
+<span class="go">O (neutral atom)</span>
+<span class="go">!MOLECULAR WEIGHT</span>
+<span class="go">16.0</span>
+<span class="go">!NUMBER OF ENERGY LEVELS</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</li>
+<li><p>File after changes (as is in <code class="docutils literal notranslate"><span class="pre">chemfiles/</span></code>):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">!MOLECULE</span>
+<span class="go">O           &lt;--- comments removed. Name of species as in species_NETWORK.d</span>
+<span class="go">!MOLECULAR WEIGHT</span>
+<span class="go">16.0</span>
+<span class="go">!NUMBER OF ENERGY LEVELS</span>
+<span class="go">5 27        &lt;--- the maximum number of &quot;COLL TEMPS&quot; added (search for it within the file)</span>
+</pre></div>
+</div>
+<p>IMPORTANT: The current version of 3D-PDR cannot handle hyper-fine
+structures, so do not include a cooling file containing hfs.</p>
+</li>
+</ul>
+<p>Then you need to add the cooling filename at the end of the
+<code class="docutils literal notranslate"><span class="pre">params.dat</span></code>. For instance, to include cooling due to HCO+ and
+therefore study its emission, you will need to add:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">12co.dat                   !CO Do not change the following order</span>
+<span class="go">12c+.dat                   !CII</span>
+<span class="go">12c.dat                    !CI</span>
+<span class="go">16o.dat                    !OI</span>
+<span class="go">hco+.dat    &lt;--- this one!</span>
+</pre></div>
+</div>
+<p>at the end of the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code>. It is possible to add as many coolants
+as you like.</p>
+</div>
+<div class="section" id="understanding-and-plotting-the-outputs">
+<h1>Understanding and plotting the outputs<a class="headerlink" href="#understanding-and-plotting-the-outputs" title="Permalink to this heading"></a></h1>
+<p>The outputs are written in the <code class="docutils literal notranslate"><span class="pre">sims/</span></code> directory, unless the user has
+specified another one. The outputs are written once the code has been
+fully converged and finished. The code produces outputs with different
+suffixes according to i) abundances of species (<code class="docutils literal notranslate"><span class="pre">pdr.fin</span></code>), ii) line
+emission (<code class="docutils literal notranslate"><span class="pre">.line.fin</span></code>), iii) cooling functions (<code class="docutils literal notranslate"><span class="pre">.cool.fin</span></code>), iv)
+heating functions (<code class="docutils literal notranslate"><span class="pre">.heat.fin</span></code>), v) level populations of each coolant
+(<code class="docutils literal notranslate"><span class="pre">.COOL.spop.fin</span></code>) where <code class="docutils literal notranslate"><span class="pre">COOL</span></code> is the coolant name. There is also
+the possibility to output the chemical reactions that take place in each
+point (currently developing it). Currently the outputs are in ASCII
+format and they are ready to be plotted using standard tools such as
+GNUPLOT or PYTHON.</p>
+<div class="section" id="one-dimensional-outputs">
+<h2>One-dimensional outputs<a class="headerlink" href="#one-dimensional-outputs" title="Permalink to this heading"></a></h2>
+<div class="section" id="output-pdr-fin">
+<h3><code class="docutils literal notranslate"><span class="pre">OUTPUT.pdr.fin</span></code>:<a class="headerlink" href="#output-pdr-fin" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 17%" />
+<col style="width: 63%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>ID</p></td>
+<td><p>Identity of cell (integer)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>x</p></td>
+<td><p>Position (pc)</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Av</p></td>
+<td><p>Visual extinction (mag)</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Tgas</p></td>
+<td><p>Gas temperature (K)</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Tdust</p></td>
+<td><p>Dust temperature (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>etype</p></td>
+<td><p>Type of cell (integer)</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>nH</p></td>
+<td><p>Number density of cell (cm-3)</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>UV</p></td>
+<td><p>Intensity of FUV (Draine)</p></td>
+</tr>
+<tr class="row-even"><td><p>9-…</p></td>
+<td><p>…</p></td>
+<td><p>Abundances of species</p></td>
+</tr>
+</tbody>
+</table>
+<p>The abundances of species follow the <code class="docutils literal notranslate"><span class="pre">species_NETWORK.d</span></code> sequence</p>
+</div>
+<div class="section" id="output-cool-fin">
+<h3><code class="docutils literal notranslate"><span class="pre">OUTPUT.cool.fin</span></code>:<a class="headerlink" href="#output-cool-fin" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Columns</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>ID</p></td>
+<td><p>Identity of cell (integer)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>x</p></td>
+<td><p>Position (pc)</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Av</p></td>
+<td><p>Visual extinction (mag)</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>CO</p></td>
+<td><p>CO cooling function</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>C+</p></td>
+<td><p>C+ cooling function</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>C</p></td>
+<td><p>C cooling function</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>O</p></td>
+<td><p>O cooling function</p></td>
+</tr>
+<tr class="row-odd"><td><p>8-…</p></td>
+<td><p>…</p></td>
+<td><p>Cooling function of additional coolants</p></td>
+</tr>
+<tr class="row-even"><td><p>Last</p></td>
+<td><p>Total</p></td>
+<td><p>Total cooling (sum of all)</p></td>
+</tr>
+</tbody>
+</table>
+<p>The sequence of coolants is the same as in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code>. If no
+additional coolants are inserted, the <code class="docutils literal notranslate"><span class="pre">total</span></code> cooling function is
+column 8.</p>
+</div>
+<div class="section" id="output-heat-fin">
+<h3><code class="docutils literal notranslate"><span class="pre">OUTPUT.heat.fin</span></code>:<a class="headerlink" href="#output-heat-fin" title="Permalink to this heading"></a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 18%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Columns</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>ID</p></td>
+<td><p>Identity of cell (integer)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>x</p></td>
+<td><p>Position (pc)</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Av</p></td>
+<td><p>Visual extinction (mag)</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>HR01</p></td>
+<td><p>Not contributing</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>HR02</p></td>
+<td><p>Photoelectric</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>HR03</p></td>
+<td><p>Not contributing</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>HR04</p></td>
+<td><p>Carbon ionization</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>HR05</p></td>
+<td><p>H2 formation</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>HR06</p></td>
+<td><p>H2 photodissociation</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>HR07</p></td>
+<td><p>FUV pumping</p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>HR08</p></td>
+<td><p>Cosmic-rays</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>HR09</p></td>
+<td><p>Turbulent</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>HR10</p></td>
+<td><p>Chemical</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>HR11</p></td>
+<td><p>Gas-grain</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>HR12</p></td>
+<td><p>Total (sum of all)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="three-dimensional-outputs">
+<h2>Three-dimensional outputs<a class="headerlink" href="#three-dimensional-outputs" title="Permalink to this heading"></a></h2>
+<p>Three dimensional outputs follow a similar sequence to the above. New
+routines to handle these are currently implemented, however you can
+explore the <code class="docutils literal notranslate"><span class="pre">pdr.fin</span></code> output as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 13%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>ID</p></td>
+<td><p>Identity of cell (integer)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>x</p></td>
+<td><p>x position (pc)</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>y</p></td>
+<td><p>y position (pc)</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>z</p></td>
+<td><p>z position (pc)</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Tgas</p></td>
+<td><p>Gas temperature (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Tdust</p></td>
+<td><p>Dust temperature (K)</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>etype</p></td>
+<td><p>Type of cell (integer)</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>nH</p></td>
+<td><p>Number density of cell (cm-3)</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>UV</p></td>
+<td><p>Intensity of FUV (Draine)</p></td>
+</tr>
+<tr class="row-odd"><td><p>10-10+species</p></td>
+<td><p>…</p></td>
+<td><p>Abundances of species</p></td>
+</tr>
+<tr class="row-even"><td><p>11+species-…</p></td>
+<td><p>Av</p></td>
+<td><p>Visual extinction of each HEALPix ray</p></td>
+</tr>
+</tbody>
+</table>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">columndensities3D.f90</span></code> interactive algorithm to
+project your 3D model and calculate the column density of species.</p>
+</div>
+</div>
+<div class="section" id="the-radiative-transfer-algorithm-rttool">
+<h1>The radiative transfer algorithm RTtool<a class="headerlink" href="#the-radiative-transfer-algorithm-rttool" title="Permalink to this heading"></a></h1>
+<p>The source code of this algorithm is in <code class="docutils literal notranslate"><span class="pre">RadiativeTransfer/</span></code>
+directory. Advance to this directory and <code class="docutils literal notranslate"><span class="pre">make</span></code> the code. As with
+3D-PDR, the executable <code class="docutils literal notranslate"><span class="pre">RTtool</span></code> will be moved to the main directory
+<code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code>. This algorithm reads the <code class="docutils literal notranslate"><span class="pre">.RTspop.fin</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">.pdr.fin</span></code> outputs from the <code class="docutils literal notranslate"><span class="pre">sims/</span></code> directory and solves the
+radiative transfer equation along the line of sight. The outputs are
+on-screen and they follow the <code class="docutils literal notranslate"><span class="pre">RADEX</span></code> format to ease the reader
+familiar with that algorithm. The integration is done for the entire
+cloud.</p>
+<div class="section" id="the-paramsrt-dat">
+<h2>The <code class="docutils literal notranslate"><span class="pre">paramsRT.dat</span></code><a class="headerlink" href="#the-paramsrt-dat" title="Permalink to this heading"></a></h2>
+<p>This is very simple parameters file specifying the details for the input
+model:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sims                    !Directory of PDR output</span>
+<span class="go">test                    !Model prefix</span>
+<span class="go">1                       !Vturb (km/s)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sims</span></code> is the directory of the PDR output. If you have saved your
+model in a different directory, you will need to change the name
+here, too.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code> is the model prefix you used (default name)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">1</span></code> is the macroturbulent velocity (in km/s) which is used to
+calculate the linewidth.</p></li>
+</ul>
+</div>
+<div class="section" id="the-output-rt-pdr-prefix-dat">
+<h2>The output <code class="docutils literal notranslate"><span class="pre">RT_[PDR-prefix].dat</span></code><a class="headerlink" href="#the-output-rt-pdr-prefix-dat" title="Permalink to this heading"></a></h2>
+<p>Currently, <code class="docutils literal notranslate"><span class="pre">RTtool</span></code> writes out the first transition of each coolant as
+a function of the total column density. In future versions the plan is
+to output all quantities for the user to explore how i) the excitation
+temperature, ii) the optical depth and iii) the radiation temperature
+increase as a function of the total column density and/or the column
+density of the coolant.</p>
+<p>The output in this version is called <code class="docutils literal notranslate"><span class="pre">RT_[prefix-of-PDR-model].dat</span></code>,
+saved in the main directory <code class="docutils literal notranslate"><span class="pre">~/PDRmodels/</span></code>. The columns are:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 21%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Ntot</p></td>
+<td><p>Total column density (cm-2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Tr CO(1-0)</p></td>
+<td><p>Radiation temperature of CO(1-0) (K)</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Tr CII</p></td>
+<td><p>Radiation temperature of CII 158um (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Tr CI</p></td>
+<td><p>Radiation temperature of CI(1-0) (K)</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Tr OI</p></td>
+<td><p>Radiation temperature of OI 63um (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p>6…</p></td>
+<td><p>Tr X</p></td>
+<td><p>Radiation temperatures of added coolants</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="the-py3dpdr-python-wrapper">
+<h1>The <code class="docutils literal notranslate"><span class="pre">py3DPDR</span></code> python wrapper<a class="headerlink" href="#the-py3dpdr-python-wrapper" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p>Summary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.makefile()</span></code> &lt;#pdrmakefile&gt;`__</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.ics()</span></code> &lt;#pdrics&gt;`__</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.species()</span></code> &lt;#pdrspecies&gt;`__</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.params()</span></code> &lt;#pdrparams&gt;`__</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.run3DPDR()</span></code> &lt;#pdrrun3DPDR&gt;`__</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`pdr.plot()</span></code> &lt;#pdrplot&gt;`__</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">py3DPDR.py</span></code> is a python wrapper of the 3D-PDR code to facilitate its
+use for simple one-dimensional models. Using this wrapper the user can
+create one-dimensional uniform density clouds as initial conditions,
+compile the code, change the parameters of the model, change the initial
+elemental abundances, run the code, and plot the simulation results.</p>
+<p>Import the wrapper:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">py3DPDR</span> <span class="k">as</span> <span class="nn">pdr</span>
+</pre></div>
+</div>
+<div class="section" id="compile-the-3d-pdr-code-pdr-makefile">
+<h2>Compile the 3D-PDR code: <code class="docutils literal notranslate"><span class="pre">pdr.makefile()</span></code><a class="headerlink" href="#compile-the-3d-pdr-code-pdr-makefile" title="Permalink to this heading"></a></h2>
+<p>To compile 3D-PDR, use the <code class="docutils literal notranslate"><span class="pre">pdr.makefile()</span></code>. Here you can specify the
+flags to compile the code, as discussed in the <a class="reference external" href="#the-makefile">makefile
+section</a>. If a flag is not specified, the code will
+compile with the default flags. The default flags are as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>F90</p></td>
+<td><p>gfortran</p></td>
+</tr>
+<tr class="row-odd"><td><p>CC</p></td>
+<td><p>gcc</p></td>
+</tr>
+<tr class="row-even"><td><p>CPPFLAGS</p></td>
+<td><p>-cpp</p></td>
+</tr>
+<tr class="row-odd"><td><p>SUNDIALS</p></td>
+<td><p>7.0</p></td>
+</tr>
+<tr class="row-even"><td><p>OPENMP</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>OPTIMISE</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>PYWRAP</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>DIMENSIONS</p></td>
+<td><p>1 (do not change in py3DPDR)</p></td>
+</tr>
+<tr class="row-even"><td><p>RAYTHEIA</p></td>
+<td><p>0 (do not change in py3DPDR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>RAYTHEIA_MO</p></td>
+<td><p>0 (do not change in py3DPDR)</p></td>
+</tr>
+<tr class="row-even"><td><p>XYZ</p></td>
+<td><p>0 (do not change in py3DPDR)</p></td>
+</tr>
+<tr class="row-odd"><td><p>NETWORK</p></td>
+<td><p>REDUCED</p></td>
+</tr>
+<tr class="row-even"><td><p>XRAYS</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>DUST</p></td>
+<td><p>HTT91</p></td>
+</tr>
+<tr class="row-even"><td><p>GUESS_TEMP</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>THERMALBALANCE</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>FORCECONVERGENCE</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>GRAINRECOMB</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>SUPRATHERMAL</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>H2FORM</p></td>
+<td><p>CT02</p></td>
+</tr>
+<tr class="row-even"><td><p>CRATTENUATION</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><td><p>RESTART</p></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+<p>The code will not compile under <code class="docutils literal notranslate"><span class="pre">PYWRAP=1</span></code> and <code class="docutils literal notranslate"><span class="pre">DIMENSIONS=3</span></code>
+conditions. The purpose of this wrapper is to simplify the use of 3D-PDR
+in one-dimensional models only.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading"></a></h3>
+<p>The command</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="n">CC</span><span class="o">=</span><span class="s1">&#39;gcc-14&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will compile the C part of the code using <code class="docutils literal notranslate"><span class="pre">gcc-14</span></code> (e.g. for Mac
+users).</p>
+<p>The command</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="n">GRAINRECOMB</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">SUPRATHERMAL</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will compile the code with all above flags but the <code class="docutils literal notranslate"><span class="pre">GRAINRECOMB</span></code> flag
+will change to <code class="docutils literal notranslate"><span class="pre">1</span></code> (switches on the electron recombination on dust
+grains) and the <code class="docutils literal notranslate"><span class="pre">SUPRATHERMAL</span></code> flag will also change to <code class="docutils literal notranslate"><span class="pre">1</span></code>
+(switches on the suprathermal formation of CO via CH+)</p>
+</div>
+</div>
+<div class="section" id="create-initial-conditions-pdr-ics">
+<h2>Create initial conditions: <code class="docutils literal notranslate"><span class="pre">pdr.ics()</span></code><a class="headerlink" href="#create-initial-conditions-pdr-ics" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">py3DPDR</span></code> comes with the <code class="docutils literal notranslate"><span class="pre">pdr.ics()</span></code> function that allows to make
+initial conditions for one-dimensional PDR models. The initial
+conditions include uniform density clouds, the density, size, and
+resolution of which are defined by the user. The list of arguments is as
+follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 27%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>nH</p></td>
+<td><p>1000</p></td>
+<td><p>Density of cloud (cm-3)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Avmax</p></td>
+<td><p>10</p></td>
+<td><p>Maximum Av (mag)</p></td>
+</tr>
+<tr class="row-even"><td><p>Avmin</p></td>
+<td><p>1e-3</p></td>
+<td><p>Minimum Av (mag)</p></td>
+</tr>
+<tr class="row-odd"><td><p>resolution</p></td>
+<td><p>30</p></td>
+<td><p>Resolution per Av dex</p></td>
+</tr>
+<tr class="row-even"><td><p>avfac</p></td>
+<td><p>6.289e-22</p></td>
+<td><p>Av factor (mag cm2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>directory</p></td>
+<td><p>ics/</p></td>
+<td><p>Output directory</p></td>
+</tr>
+<tr class="row-even"><td><p>filename</p></td>
+<td><p>outgrid.dat</p></td>
+<td><p>Output filename</p></td>
+</tr>
+</tbody>
+</table>
+<p>If <code class="docutils literal notranslate"><span class="pre">pdr.ics()</span></code> is executed, with the above default values the function
+creates a 1D uniform density cloud of n=1e3 cm-3, with a minimum Av of
+1e-3 mag, a maximum Av of 10 mag, a resolution of 30 points per Av dex
+(therefore from 1e-3 to 1e-2 there are 30 points logarithmically
+distributed, similarly from 1e-2 to 1e-1 etc.), using an Av factor of
+6.289e-22 mag cm2 that converts the total H-nucleus column density to
+visual extinction. The output is written in the “ics/” directory and it
+is called “outgrid.dat”. If you want to save the file in a different
+directory, make sure the directory exists before <code class="docutils literal notranslate"><span class="pre">pdr.ics()</span></code> is
+executed.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading"></a></h3>
+<p>The command</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">ics</span><span class="p">(</span><span class="n">nH</span><span class="o">=</span><span class="mi">2500</span><span class="p">,</span> <span class="n">Avmax</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;mymodel.dat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a cloud with n=2500 cm-3 density, maximum Av of 20 mag and a
+higher resolution of 40 points per Av dex. All other values are
+equivalent to the above default values. The output “mymodel.dat” is
+written in the default “ics/” directory. This should be the input
+filename (<code class="docutils literal notranslate"><span class="pre">icsfile</span></code>) in the <code class="docutils literal notranslate"><span class="pre">params.dat</span></code> file to use it in the model
+(<a class="reference external" href="#pdrparams">see below</a>).</p>
+</div>
+</div>
+<div class="section" id="specify-the-initial-chemical-abundances-pdr-species">
+<h2>Specify the initial chemical abundances: <code class="docutils literal notranslate"><span class="pre">pdr.species()</span></code><a class="headerlink" href="#specify-the-initial-chemical-abundances-pdr-species" title="Permalink to this heading"></a></h2>
+<p>With the function <code class="docutils literal notranslate"><span class="pre">pdr.species()</span></code> the user can specify the initial
+abundances for the given network. The <code class="docutils literal notranslate"><span class="pre">network</span></code> variable is always
+needed to execute the function. The available variables are <code class="docutils literal notranslate"><span class="pre">REDUCED</span></code>,
+<code class="docutils literal notranslate"><span class="pre">MEDIUM</span></code> or <code class="docutils literal notranslate"><span class="pre">FULL</span></code> for the three available chemical networks. The
+default initial elemental abundances are those listed in Asplund+2009
+paper, with the exception of oxygen (3e-4) and carbon (1.4e-4)
+abundances which are the local ISM depleted ones. The following table
+shows the variables and the default values.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mg_plus</p></td>
+<td><p>2.70E-07</p></td>
+<td><p>Mg+</p></td>
+</tr>
+<tr class="row-odd"><td><p>C_plus</p></td>
+<td><p>1.40E-04</p></td>
+<td><p>C+</p></td>
+</tr>
+<tr class="row-even"><td><p>He</p></td>
+<td><p>1.00E-01</p></td>
+<td><p>He</p></td>
+</tr>
+<tr class="row-odd"><td><p>O</p></td>
+<td><p>3.00E-04</p></td>
+<td><p>O</p></td>
+</tr>
+<tr class="row-even"><td><p>H2</p></td>
+<td><p>3.00E-01</p></td>
+<td><p>H2</p></td>
+</tr>
+<tr class="row-odd"><td><p>H</p></td>
+<td><p>4.00E-01</p></td>
+<td><p>H</p></td>
+</tr>
+<tr class="row-even"><td><p>N_plus</p></td>
+<td><p>6.76E-05</p></td>
+<td><p>N+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Na_plus</p></td>
+<td><p>1.73E-06</p></td>
+<td><p>Na+</p></td>
+</tr>
+<tr class="row-even"><td><p>F_plus</p></td>
+<td><p>3.63E-08</p></td>
+<td><p>F+</p></td>
+</tr>
+<tr class="row-odd"><td><p>P_plus</p></td>
+<td><p>2.57E-07</p></td>
+<td><p>P+</p></td>
+</tr>
+<tr class="row-even"><td><p>S_plus</p></td>
+<td><p>1.32E-05</p></td>
+<td><p>S+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fe_plus</p></td>
+<td><p>3.16E-05</p></td>
+<td><p>Fe+</p></td>
+</tr>
+<tr class="row-even"><td><p>Si_plus</p></td>
+<td><p>3.23E-05</p></td>
+<td><p>Si+</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cl_plus</p></td>
+<td><p>3.16E-07</p></td>
+<td><p>Cl+</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>The command</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">species</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s1">&#39;REDUCED&#39;</span><span class="p">,</span> <span class="n">C_plus</span><span class="o">=</span><span class="mf">1.40E-05</span><span class="p">,</span> <span class="n">O</span><span class="o">=</span><span class="mf">3.00E-05</span><span class="p">,</span> <span class="n">Mg_plus</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates the <code class="docutils literal notranslate"><span class="pre">species_reduced.d</span></code> file in the <code class="docutils literal notranslate"><span class="pre">chemfiles/</span></code> directory
+and sets C+=1.4e-5, O=3e-5, Mg=0 and all other species of the REDUCED
+network to the default values.</p>
+</div>
+</div>
+<div class="section" id="prepare-the-params-dat-file-pdr-params">
+<h2>Prepare the params.dat file: <code class="docutils literal notranslate"><span class="pre">pdr.params()</span></code><a class="headerlink" href="#prepare-the-params-dat-file-pdr-params" title="Permalink to this heading"></a></h2>
+<p>You can specify all parameters of the PDR model from the
+<code class="docutils literal notranslate"><span class="pre">pdr.params()</span></code> function. The default values are as follows:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 17%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p><em>Input/Output - Densities</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>icsdir</p></td>
+<td><p>ics</p></td>
+<td><p>Directory of initial conditions</p></td>
+</tr>
+<tr class="row-even"><td><p>icsfile</p></td>
+<td><p>1Dn30.dat</p></td>
+<td><p>Initial conditions input filename</p></td>
+</tr>
+<tr class="row-odd"><td><p>outdir</p></td>
+<td><p>sims</p></td>
+<td><p>Output directory</p></td>
+</tr>
+<tr class="row-even"><td><p>prefix</p></td>
+<td><p>model</p></td>
+<td><p>Output prefix</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p><em>PDR parameters</em></p></td>
+</tr>
+<tr class="row-even"><td><p>fuv</p></td>
+<td><p>1</p></td>
+<td><p>Intensity of FUV radiation (Draine)</p></td>
+</tr>
+<tr class="row-odd"><td><p>zcr</p></td>
+<td><p>1.0E-17</p></td>
+<td><p>Cosmic-ray ionization rate (s-1)</p></td>
+</tr>
+<tr class="row-even"><td><p>xrays</p></td>
+<td><p>0.0</p></td>
+<td><p>X-ray flux (erg/cm2/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>d2g</p></td>
+<td><p>1.0</p></td>
+<td><p>Dust-to-gas normalized to 1e-2</p></td>
+</tr>
+<tr class="row-even"><td><p>vturb</p></td>
+<td><p>1.0</p></td>
+<td><p>Microturbulent velocity (km/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>tend</p></td>
+<td><p>1e7</p></td>
+<td><p>End chemical time (yr)</p></td>
+</tr>
+<tr class="row-even"><td><p>grainrad</p></td>
+<td><p>1.0E-5</p></td>
+<td><p>Grain radius (cm)</p></td>
+</tr>
+<tr class="row-odd"><td><p>avfac</p></td>
+<td><p>6.289e-22</p></td>
+<td><p>Av factor converting Ntot to Av</p></td>
+</tr>
+<tr class="row-even"><td><p>uvfac</p></td>
+<td><p>3.02</p></td>
+<td><p>UV factor for FUV attenuation</p></td>
+</tr>
+<tr class="row-odd"><td><p>redshift</p></td>
+<td><p>0</p></td>
+<td><p>Redshift (controls Tcmb value)</p></td>
+</tr>
+<tr class="row-even"><td><p>av_crit</p></td>
+<td><p>0.7</p></td>
+<td><p>Critical Av (for SUPRATHERMAL=1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>v_alfv</p></td>
+<td><p>3.3</p></td>
+<td><p>Alfven velocity (km/s for SUPRATHERMAL=1)</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p><em>Ray-tracing parameters</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>healpix_level</p></td>
+<td><p>0</p></td>
+<td><p>Healpix level of refinment (DIMENSIONS=3)</p></td>
+</tr>
+<tr class="row-even"><td><p>theta_crit</p></td>
+<td><p>1.3</p></td>
+<td><p>Theta_critical (DIMENSIONS=3, RAYTHEIA=0)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p><em>ODE Solver parameters</em></p></td>
+</tr>
+<tr class="row-even"><td><p>rel_tol</p></td>
+<td><p>1.0E-8</p></td>
+<td><p>Relative tolerance parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p>abs_tol</p></td>
+<td><p>1.0E-30</p></td>
+<td><p>Absolute tolerance parameter</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td></td>
+<td><p><em>Chemistry iterations</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>init_iter</p></td>
+<td><p>8</p></td>
+<td><p>Initial chemical iterations</p></td>
+</tr>
+<tr class="row-even"><td><p>max_iter</p></td>
+<td><p>6000</p></td>
+<td><p>Maximum iterations over thermal balance</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td><p><em>Thermal balance values</em></p></td>
+</tr>
+<tr class="row-even"><td><p>tgas</p></td>
+<td><p>40.0</p></td>
+<td><p>Gas temperature (for THERMALBALANCE=0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>tfloor</p></td>
+<td><p>2.725</p></td>
+<td><p>Floor tempearture (if tfloor</p></td>
+</tr>
+</tbody>
+</table>
+<p>The command</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">run3DPDR</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>runs the code. The code requires from a few seconds to several minutes
+depending on your machine and the chosen PDR configuration to converge.</p>
+</div>
+<div class="section" id="plot-pdr-results-pdr-plot">
+<h2>Plot PDR results: <code class="docutils literal notranslate"><span class="pre">pdr.plot()</span></code><a class="headerlink" href="#plot-pdr-results-pdr-plot" title="Permalink to this heading"></a></h2>
+<p>The function <code class="docutils literal notranslate"><span class="pre">pdr.plot()</span></code> offers the ability to quickly plot results
+for a particular model. It is <em>by no means</em> written to create
+paper-quality plots and perform more advanced calculations /
+comparisons. There is an extended list of available arguments for that
+function, shown below:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>argument</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>x</p></td>
+<td><p>position of element (pc)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Av</p></td>
+<td><p>visual extinction (mag)</p></td>
+</tr>
+<tr class="row-even"><td><p>Tgas</p></td>
+<td><p>gas temperature (K)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tdust</p></td>
+<td><p>dust temperature (K)</p></td>
+</tr>
+<tr class="row-even"><td><p>nH</p></td>
+<td><p>total H-nucleus number density (cm-3)</p></td>
+</tr>
+<tr class="row-odd"><td><p>fuv</p></td>
+<td><p>intensity of FUV radiation (Draine)</p></td>
+</tr>
+<tr class="row-even"><td><p>photoelectric</p></td>
+<td><p>Photoelectric heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cionization</p></td>
+<td><p>Carbon ionization heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>H2formation</p></td>
+<td><p>H2 formation heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>H2photodis</p></td>
+<td><p>H2 photodissociation heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>FUVpumping</p></td>
+<td><p>FUV pumping heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>cosmicray</p></td>
+<td><p>cosmic-ray heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>turbulent</p></td>
+<td><p>turbulent heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>chemical</p></td>
+<td><p>chemical heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>gasgrain</p></td>
+<td><p>gas-grain heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>totheat</p></td>
+<td><p>Total heating (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>COcool</p></td>
+<td><p>CO cooling (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>C+cool</p></td>
+<td><p>C+ cooling (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>Ccool</p></td>
+<td><p>C cooling (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ocool</p></td>
+<td><p>O cooling (erg/cm3/s)</p></td>
+</tr>
+<tr class="row-even"><td><p>any additional coolants here</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>totcool</p></td>
+<td><p>Total cooling (erg/cm3/s)</p></td>
+</tr>
+</tbody>
+</table>
+<p>where the additional coolants included in the params.dat file (e.g. HCO+
+with <code class="docutils literal notranslate"><span class="pre">hcop.dat</span></code>), follow the notation COOLANT+cool e.g. for HCO+ it
+will be <code class="docutils literal notranslate"><span class="pre">HCO+cool</span></code>. Other arguments include:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 18%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>linestyle</p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+<td><p>Linestyle as in matplotlib</p></td>
+</tr>
+<tr class="row-odd"><td><p>directory</p></td>
+<td><p>sims/</p></td>
+<td><p>Specifies model output directory</p></td>
+</tr>
+<tr class="row-even"><td><p>prefix</p></td>
+<td><p>None</p></td>
+<td><p>Prefix of model to plot</p></td>
+</tr>
+<tr class="row-odd"><td><p>scale</p></td>
+<td><p>loglog</p></td>
+<td><p>linear, loglog, semilogx, semilogy</p></td>
+</tr>
+</tbody>
+</table>
+<p>In addition, the abundance of any species can be plotted by using the
+name of the species in the function, as defined in the
+<code class="docutils literal notranslate"><span class="pre">species_NETWORK.d</span></code> chemical network file.</p>
+<div class="section" id="example-1">
+<h3>Example 1<a class="headerlink" href="#example-1" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,</span><span class="s2">&quot;Tgas&quot;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="s2">&quot;semilogx&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>plots the gas temperature versus Av on a semi-log scale (log in x axis)</p>
+</div>
+<div class="section" id="example-2">
+<h3>Example 2<a class="headerlink" href="#example-2" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,</span><span class="s2">&quot;e-&quot;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="s2">&quot;loglog&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>plots the electron abundance versus Av in log-log scale</p>
+</div>
+<div class="section" id="example-3">
+<h3>Example 3<a class="headerlink" href="#example-3" title="Permalink to this heading"></a></h3>
+<p>It is possible to plot two or more species simultaneously</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span><span class="s2">&quot;H2&quot;</span><span class="p">],</span><span class="n">scale</span><span class="o">=</span><span class="s2">&quot;loglog&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>for the HI-to-H2 transition, and</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,[</span><span class="s2">&quot;C+&quot;</span><span class="p">,</span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="s2">&quot;CO&quot;</span><span class="p">],</span><span class="n">scale</span><span class="o">=</span><span class="s2">&quot;loglog&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>for the carbon cycle (C+, C, CO)</p>
+</div>
+<div class="section" id="example-4">
+<h3>Example 4<a class="headerlink" href="#example-4" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,[</span><span class="s2">&quot;totheat&quot;</span><span class="p">,</span><span class="s2">&quot;totcool&quot;</span><span class="p">],</span><span class="n">scale</span><span class="o">=</span><span class="s2">&quot;semilogy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>plots the total heating and total cooling functions in a semi-log scale
+(log in y axis). Under the THERMALBALANCE=1 flag, these two curves
+should match.</p>
+</div>
+</div>
+<div class="section" id="general-example">
+<h2>General example<a class="headerlink" href="#general-example" title="Permalink to this heading"></a></h2>
+<p>The script</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">py3DPDR</span> <span class="k">as</span> <span class="nn">pdr</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">makefile</span><span class="p">()</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">ics</span><span class="p">()</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">species</span><span class="p">(</span><span class="n">network</span><span class="o">=</span><span class="s2">&quot;REDUCED&quot;</span><span class="p">)</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">icsfile</span><span class="o">=</span><span class="s2">&quot;outgrid.dat&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mymodel&quot;</span><span class="p">,</span><span class="n">coolant_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;hcop.dat&quot;</span><span class="p">])</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">run3DPDR</span><span class="p">()</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,</span> <span class="s2">&quot;Tgas&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mymodel&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s2">&quot;semilogx&quot;</span><span class="p">)</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span><span class="s2">&quot;H2&quot;</span><span class="p">],</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;mymodel&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="s1">&#39;loglog&#39;</span><span class="p">)</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,[</span><span class="s2">&quot;C+&quot;</span><span class="p">,</span><span class="s2">&quot;C&quot;</span><span class="p">,</span><span class="s2">&quot;CO&quot;</span><span class="p">],</span><span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;mymodel&#39;</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="s1">&#39;loglog&#39;</span><span class="p">)</span>
+<span class="n">pdr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s2">&quot;Av&quot;</span><span class="p">,[</span><span class="s2">&quot;COcool&quot;</span><span class="p">,</span><span class="s2">&quot;C+cool&quot;</span><span class="p">,</span><span class="s2">&quot;Ccool&quot;</span><span class="p">,</span><span class="s2">&quot;Ocool&quot;</span><span class="p">,</span><span class="s2">&quot;HCO+cool&quot;</span><span class="p">,</span><span class="s2">&quot;totcool&quot;</span><span class="p">],</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mymodel&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>compiles the code with the default flags, makes an initial conditions
+file with the default variables (therefore output is named
+<code class="docutils literal notranslate"><span class="pre">outgrid.dat</span></code>), creates the <code class="docutils literal notranslate"><span class="pre">species_reduced.d</span></code> file with the
+default abundances of species for the REDUCED network, makes the
+params.dat file with the user-defined initial conditions and prefix, and
+adds HCO+ as an extra coolant. The script will then run the code and
+will plot the gas temperature versus Av from the model specied with the
+<code class="docutils literal notranslate"><span class="pre">prefix</span></code> argument in a semilogx scale. It will also plot the HI-to-H2
+transition, the C+/C/CO transition, and the cooling functions, all in
+log-log scale.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to ITAMOS-ISM’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Thomas G. Bisbas.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
