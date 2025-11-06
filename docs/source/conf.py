@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'ITAMOS-ISM'
+project = '3D-PDR'
 copyright = '2025, Thomas G. Bisbas'
 author = 'Thomas G. Bisbas'
 
