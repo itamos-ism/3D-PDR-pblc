@@ -1,4 +1,3 @@
 # 3D-PDR-pblc
-Hello world!
-## Chapter 1
-## Chapter 2
+Public version of upgraded 3d-pdr
+Click [here](https://3d-pdr-pblc.readthedocs.io/en/latest/) to see the manual
