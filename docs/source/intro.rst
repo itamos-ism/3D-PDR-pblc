@@ -8,4 +8,4 @@ The 3D-PDR code
    :scale: 25%
    :align: center
 
-In the above CO-dark is in hatched.
+The hatched region satisfies the condition [CI](1-0) > CO(1-0)
