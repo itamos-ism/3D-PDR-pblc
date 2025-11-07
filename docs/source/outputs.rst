@@ -1,5 +1,5 @@
-Understanding and Plotting the Outputs
-======================================
+Understanding the outputs
+=========================
 
 Output files are written to the ``sims/`` directory (unless specified otherwise) after the code has fully converged. The code generates multiple output files with different suffixes:
 
