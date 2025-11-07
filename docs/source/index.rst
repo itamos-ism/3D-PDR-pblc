@@ -14,6 +14,7 @@ Welcome to the 3D-PDR documentation!
    installation
    makefile
    params
+   ics
 
 
 Indices and tables
