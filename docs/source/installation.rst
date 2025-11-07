@@ -1,5 +1,5 @@
-Installing the code
-===================
+Getting started
+===============
 
 To install **3D-PDR**, you must first install **SUNDIALS**.  
 You will need the **gfortran** and **gcc** compilers, as well as **CMake**.
