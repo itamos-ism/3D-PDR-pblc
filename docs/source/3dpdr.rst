@@ -5,6 +5,9 @@ The 3D-PDR code
 
 The upgraded 3D-PDR uses the ray-tracing scheme RAYTHEIA (Zhu et al., *in prep*), a highly parallelized algorithm that achieves significant speed-up allowing to model high-resolution PDRs in full three-dimensions. In particular, the MPI-parallelized version enables large-scale simulations on distributed-memory systems, making 3D-PDR a powerful tool for investigating PDRs in both Galactic and extragalactic environments.
 
+Papers using 3D-PDR
+-------------------
+
 Since its development, 3D-PDR and its coupled tools for synthetic observations have been used to demonstrate the power of full three-dimensional PDR modelling for both interpreting observations and for probing fundamental ISM physics. Below is a growing list of papers that used 3D-PDR in their analysis (in reversed chronological order):
 
 
