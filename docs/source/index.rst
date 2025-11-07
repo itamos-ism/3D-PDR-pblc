@@ -21,6 +21,7 @@ Welcome to the 3D-PDR documentation!
    outputs
    examples
    RT-background
+   RT-gallery
    RT-tool
    RT-synth
 
