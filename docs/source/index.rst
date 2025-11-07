@@ -14,8 +14,8 @@ Welcome to the 3D-PDR documentation!
    installation
    makefile
    params
-   ics
    species
+   ics
    outputs
    examples
 
