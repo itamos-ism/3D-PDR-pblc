@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = '3D-PDR'
+project = 'The 3D-PDR code'
 copyright = '2025, Thomas G. Bisbas'
 author = 'Thomas G. Bisbas'
 
