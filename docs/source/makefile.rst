@@ -99,7 +99,7 @@ Second Section (Chemistry and Density Options)
   Selects the chemical network based on the UMIST database.  
 
   - ``REDUCED`` — 33 species, 331 reactions.  
-  - ``MEDIUM`` — 77 species, 1158 reactions (B. Gaches).  
+  - ``MEDIUM`` — 77 species, 1158 reactions (due to B. Gaches).  
   - ``FULL`` — 215 species, 2926 reactions.  
 
   More complex networks increase runtime.
