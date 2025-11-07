@@ -7,6 +7,10 @@ The resulting stratified structure comprises atomic, ionized, and molecular laye
 
 Studies of PDRs allow us to understand the effects of FUV photons on the chemistry and structure of the neutral ISM in galaxies, as well as diagnosing the conditions within star-forming regions. PDRs are responsible for most of the infrared radiation from galaxies. Solving numerically the astrochemical network that occurs in PDRs is a powerful way to estimate the abundances of species and simulate the line emission of the observed galactic and extragalactic clouds.
 
+.. image:: images/pdr.png
+   :scale: 50%
+   :alt: Sample structure of a PDR
+
 The 3D-PDR code
 ---------------
 
