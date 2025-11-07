@@ -93,7 +93,7 @@ Second Section (Chemistry and Density Options)
   - ``XYZ = 0`` — z changes fastest.  
   - ``XYZ = 1`` — x changes fastest.  
 
-  See the relevant section for more details. !!!!!
+  See :ref:`ics3D` relevant section for more details.
 
 - **NETWORK**:
   Selects the chemical network based on the UMIST database.  
