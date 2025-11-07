@@ -35,6 +35,7 @@ The sample 1D model features:
     plot 'test.pdr.fin' u 3:19 w l t 'C+', '' u 3:33 w l t 'C', '' u 3:36 w l t 'CO'
 
 These commands generate:
+
 - HI-to-H₂ transition
 - C⁺-C-CO transition  
 - Gas temperature profile
