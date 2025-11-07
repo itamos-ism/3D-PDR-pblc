@@ -7,8 +7,8 @@ Welcome to the 3D-PDR documentation!
 ======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+   :caption: 3D-PDR:
 
    background
    3dpdr
@@ -20,6 +20,11 @@ Welcome to the 3D-PDR documentation!
    ics
    outputs
    examples
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Radiative Transfer:
+
    RT-background
    RT-gallery
    RT-tool
