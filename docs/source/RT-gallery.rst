@@ -6,5 +6,5 @@ Velocity integrated emission maps of a star-formign region using **RT-synth**. T
 Top left shows the emission of CO(1-0) and the inset shows a detail of the central region. Top right shows the [CI] (1-0) line. Bottom left shows the [CII] line at :math: `$158\mu$`m and bottom right the [OI] line at :math: `$63\mu$`m. 
 
 .. image:: images/coolant_emission.png
-   :scale: 15%
+   :scale: 20%
    :alt: Velocity integrated maps of a star-forming region
