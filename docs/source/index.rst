@@ -19,6 +19,9 @@ Welcome to the 3D-PDR documentation!
    ics
    outputs
    examples
+   RT-background
+   RT-tool
+   RT-synth
 
 
 Indices and tables
