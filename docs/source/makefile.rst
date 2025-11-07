@@ -102,7 +102,7 @@ Second Section (Chemistry and Density Options)
   - ``MEDIUM`` — 77 species, 1158 reactions (due to B. Gaches).  
   - ``FULL`` — 215 species, 2926 reactions.  
 
-  More complex networks increase runtime.
+  More complex networks increase runtime. See :ref:`species` how to specify the initial elemental abundances.
 
 - **XRAYS**:
   Enables X-ray chemistry (currently experimental).  
