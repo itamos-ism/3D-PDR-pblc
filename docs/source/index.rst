@@ -10,7 +10,8 @@ Welcome to the 3D-PDR documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   intro
+   background
+   3dpdr
    gallery
    installation
    makefile
