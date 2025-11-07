@@ -13,7 +13,7 @@ Example modification for the REDUCED network
 
 If using the ``species_reduced.d`` network, you would edit ``chemfiles/species_reduced.d`` and adjust the abundance values for elements such as hydrogen, carbon, oxygen, etc., to reflect your desired chemical composition.
 
-When editing ``species_reduced.d``, pay special attention to these critical species:
+When editing ``species_reduced.d``, pay special attention and change only the following species while leaving all the rest equal to ``0.0``:
 
 - **C+ (entry 11)**: Carbon abundance should be specified here rather than in neutral C (entry 25) to allow the code to start the chemical network from the ionized phase of carbon
 - **O (entry 30)**: Oxygen abundance
