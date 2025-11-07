@@ -1,5 +1,5 @@
-Model Parameters
-================
+Model Parameters [params.dat]
+=============================
 
 The ``params.dat`` file configures input/output settings, PDR environmental parameters, thermal balance options, coolants, and other technical parameters for 3D-PDR simulations. 
 
