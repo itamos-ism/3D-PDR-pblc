@@ -13,6 +13,7 @@ Welcome to the 3D-PDR documentation!
    intro
    installation
    makefile
+   params
 
 
 Indices and tables
