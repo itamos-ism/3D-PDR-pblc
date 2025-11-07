@@ -82,16 +82,9 @@ Run with:
 Example
 ~~~~~~~
 
-Figure below shows emission maps of [C II] 158 μm, [C I] (1-0), and CO (1-0) from a 256³ simulation of a star-forming region.
-
-.. figure:: figures/RTsynth_CII.png
-   :width: 32%
-.. figure:: figures/RTsynth_CI.png
-   :width: 32%
-.. figure:: figures/RTsynth_CO.png
-   :width: 32%
-
 The figure below shows an example FITS file generated with ``vel2fits.py`` and viewed with ``ds9``.
 
-.. figure:: figures/ds9example.png
-   :width: 98%
+.. figure:: images/ds9example.png
+   :width: 80%
+
+See :ref:`RTgallery` for velocity integrated emission maps produced with **RT-synth**
