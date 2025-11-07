@@ -26,9 +26,9 @@ Welcome to the 3D-PDR documentation!
    :caption: Radiative Transfer:
 
    RT-background
-   RT-gallery
    RT-tool
    RT-synth
+   RT-gallery
 
 
 Indices and tables
