@@ -93,7 +93,7 @@ Second Section (Chemistry and Density Options)
   - ``XYZ = 0`` — z changes fastest.  
   - ``XYZ = 1`` — x changes fastest.  
 
-  See :ref:`ics3D` relevant section for more details.
+  See the :ref:`ics3D` section for more details.
 
 - **NETWORK**:
   Selects the chemical network based on the UMIST database.  
@@ -102,7 +102,7 @@ Second Section (Chemistry and Density Options)
   - ``MEDIUM`` — 77 species, 1158 reactions (due to B. Gaches).  
   - ``FULL`` — 215 species, 2926 reactions.  
 
-  More complex networks increase runtime. See :ref:`species` how to specify the initial elemental abundances.
+  More complex networks increase runtime. See the :ref:`species` section on how to specify the initial elemental abundances.
 
 - **XRAYS**:
   Enables X-ray chemistry (currently experimental).  
