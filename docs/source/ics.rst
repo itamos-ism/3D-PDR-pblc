@@ -3,6 +3,8 @@ Constructing Initial Conditions
 
 To run a PDR model, you must first construct the density distribution of your cloud. Initial condition files can be stored in the ``ics/`` directory for repeated use across different PDR models. The ``ics/`` directory contains a script (``uniform1D.f90``) to help create density distributions, though users may create their own using external tools as long as the input format is respected.
 
+.. _ics1D:
+
 One-dimensional Density Functions
 ---------------------------------
 
@@ -45,6 +47,8 @@ This creates ``outgrid.dat`` containing a cloud with:
 - Total points: 122 (including first and last points)
 
 You may rename ``outgrid.dat`` to a more descriptive name (e.g., ``1Dn30.dat``).
+
+.. _ics3D: 
 
 Three-dimensional Density Distributions
 ---------------------------------------
