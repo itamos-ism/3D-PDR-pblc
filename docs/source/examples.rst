@@ -18,7 +18,6 @@ To run the benchmark test, execute the following sequence from your ``3D-PDR`` d
     ./3DPDR
 
 The sample 1D model features:
-
 - Uniform density cloud: :math:`n_{\rm H}=10^3\,{\rm cm}^{-3}`
 - Visual extinction: :math:`A_{\rm V}=10\,{\rm mag}`
 - Radiation field: :math:`\chi/\chi_0=10\,{\rm Draine}`
