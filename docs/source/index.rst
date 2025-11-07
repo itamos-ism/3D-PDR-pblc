@@ -16,6 +16,8 @@ Welcome to the 3D-PDR documentation!
    params
    ics
    species
+   outputs
+   examples
 
 
 Indices and tables
