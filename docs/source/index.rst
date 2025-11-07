@@ -15,6 +15,7 @@ Welcome to the 3D-PDR documentation!
    makefile
    params
    ics
+   species
 
 
 Indices and tables
