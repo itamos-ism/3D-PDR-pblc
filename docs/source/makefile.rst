@@ -1,5 +1,5 @@
-Compiling the code [makefile]
-=============================
+The makefile
+============
 
 The main flags of the code are specified in the ``config.mk`` file.  
 This file is then called within the ``makefile``.  
