@@ -11,6 +11,7 @@ Welcome to the 3D-PDR documentation!
    :caption: Contents:
 
    intro
+   gallery
    installation
    makefile
    params
