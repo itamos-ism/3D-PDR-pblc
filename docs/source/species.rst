@@ -1,5 +1,5 @@
-Setting Abundances [species_network.d]
-======================================
+Initial Elemental Abundances [species_network.d]
+================================================
 
 To modify the initial elemental abundances in your PDR model, edit the ``species_NETWORK.d`` file located in the ``chemfiles/`` directory. The specific file name depends on the chemical network you are using.
 
