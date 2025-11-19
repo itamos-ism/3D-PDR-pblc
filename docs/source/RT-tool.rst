@@ -93,6 +93,7 @@ Comparison with RADEX
 
 1. Set the linewidth value to that of turbulent velocity used in 3D-PDR and RT-tool
 2. Set the RADEX "escape probability" to ``LVG`` for consistency. 
+3. Use as H2 number density and column density of the coolant, the values outputted by RT-tool.
 
 .. note::
    
