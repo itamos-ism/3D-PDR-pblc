@@ -81,11 +81,18 @@ Comparison with RADEX
 
 **RT-tool Setup for Comparison:**
 
-Edit ``paramsRT.dat`` accordingly and run ``./RTtool``
+1. Edit ``paramsRT.dat`` accordingly 
+2. Run ``./RTtool``
+
+**RADEX Setup for Comparison:**
 
 The linewidth is given by:
 
 .. math::
    \Delta V = 2 \sqrt{2 \ln{2}}\sqrt{\frac{k_{\rm B}T_{\rm gas}}{m_{\rm mol}} + v_{\rm turb}^2}
 
-Set RADEX "escape probability" to ``LVG`` for consistency. Differences are expected since **3D-PDR** treats the cloud as 1D with depth-dependent level populations, while RADEX uses a 0D approach.
+Set the RADEX "escape probability" to ``LVG`` for consistency. 
+
+.. note::
+   
+   Differences are expected since **3D-PDR** treats the cloud as 1D with depth-dependent level populations, while RADEX uses a 0D approach.
