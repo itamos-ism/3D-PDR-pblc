@@ -21,10 +21,12 @@ Edit the ``paramsRT.dat`` file:
    1) sims
    2) test
    3) 1
+   4) 0
 
 * **Entry 1**: PDR output directory
 * **Entry 2**: Model prefix
 * **Entry 3**: Turbulent velocity (default 1 km/s)
+* **Entry 4**: Redshift (to control the CMB temperature)
 
 Run the tool:
 
