@@ -52,13 +52,13 @@ Format of ``tau_PREF_LINE.dat``::
 Comparison with RADEX
 ~~~~~~~~~~~~~~~~~~~~~
 
-`RADEX <https://var.sron.nl/radex/radex.php>`_ (`van der Tak et al., 2007 <https://ui.adsabs.harvard.edu/abs/2007A%26A...468..627V/abstract>`_) is a popular algorithm that solves radiative transfer for given column density, H₂ number density, and gas temperature. Comparison with **3D-PDR** and **RT-tool** is only valid for:
+`RADEX <https://var.sron.nl/radex/radex.php>`_ (`van der Tak et al., 2007 <https://ui.adsabs.harvard.edu/abs/2007A%26A...468..627V/abstract>`_) is a popular algorithm that solves radiative transfer for given column density, H₂ number density, and gas temperature. Comparison of **RADEX** with **3D-PDR** and **RT-tool** is only valid for:
 
 * Isothermal runs (thermal balance switched off)
 * Uniform-density 1D clouds
 * No external radiation field
 
-**Setup for Comparison:**
+**3D-PDR Setup for Comparison:**
 
 1. Edit ``config.mk``: set ``GUESS_TEMP=0`` and ``THERMALBALANCE=0`` for 1D runs
 2. Modify ``params.dat``:
@@ -78,7 +78,10 @@ Comparison with RADEX
       33) hco+.dat                   !HCO+ coolant
 
 3. Run ``./3DPDR``
-4. Edit ``paramsRT.dat`` accordingly and run ``./RTtool``
+
+**RT-tool Setup for Comparison:**
+
+Edit ``paramsRT.dat`` accordingly and run ``./RTtool``
 
 The linewidth is given by:
 
