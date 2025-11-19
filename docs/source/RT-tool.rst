@@ -91,7 +91,8 @@ Comparison with RADEX
    .. math::
       \Delta V = 2 \sqrt{2 \ln{2}}\sqrt{\frac{k_{\rm B}T_{\rm gas}}{m_{\rm mol}} + v_{\rm turb}^2}
 
-Set the RADEX "escape probability" to ``LVG`` for consistency. 
+1. Set the linewidth value to that of turbulent velocity used in 3D-PDR and RT-tool
+2. Set the RADEX "escape probability" to ``LVG`` for consistency. 
 
 .. note::
    
