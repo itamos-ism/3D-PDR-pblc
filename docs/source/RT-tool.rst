@@ -1,7 +1,9 @@
 The RT-tool Algorithm
 =====================
 
-**RT-tool** solves the radiative transfer equation for one-dimensional **3D-PDR** models. The algorithm can be used with the Python wrapper ``pyRTtool.py``. Refer to the ``HandsOn_RTtool.ipynb`` Jupyter notebook for usage instructions found on GitHub.
+**RT-tool** solves the radiative transfer equation for one-dimensional **3D-PDR** models. You can download the algorithm from this `GitHub link <https://github.com/itamos-ism/RT-tool>`_.
+
+The algorithm can be used with the Python wrapper ``pyRTtool.py``. Refer to the ``HandsOn_RTtool.ipynb`` Jupyter notebook for usage instructions found on GitHub.
 
 Running from Terminal
 ~~~~~~~~~~~~~~~~~~~~~
