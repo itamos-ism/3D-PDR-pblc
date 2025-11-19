@@ -86,10 +86,10 @@ Comparison with RADEX
 
 **RADEX Setup for Comparison:**
 
-The linewidth is given by:
+.. The linewidth is given by:
 
-.. math::
-   \Delta V = 2 \sqrt{2 \ln{2}}\sqrt{\frac{k_{\rm B}T_{\rm gas}}{m_{\rm mol}} + v_{\rm turb}^2}
+   .. math::
+      \Delta V = 2 \sqrt{2 \ln{2}}\sqrt{\frac{k_{\rm B}T_{\rm gas}}{m_{\rm mol}} + v_{\rm turb}^2}
 
 Set the RADEX "escape probability" to ``LVG`` for consistency. 
 
