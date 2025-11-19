@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the 3D-PDR documentation!
-======================================
+Welcome to the documentation of the ITAMOS project!
+===================================================
 
 .. toctree::
    :maxdepth: 3
