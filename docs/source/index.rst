@@ -29,9 +29,9 @@ Welcome to the documentation of the ITAMOS project!
    3d-pdr/makefile
    3d-pdr/params
    3d-pdr/species
-   ics
-   outputs
-   examples
+   3d-pdr/ics
+   3d-pdr/outputs
+   3d-pdr/examples
 
 .. toctree::
    :maxdepth: 3
