@@ -1,5 +1,5 @@
-Background
-==========
+Radiative Transfer
+==================
 
 Constructing synthetic observations enables direct comparison between modeled results and observational data (see review by `Haworth et al., 2018 <https://ui.adsabs.harvard.edu/abs/2018NewAR..82....1H/abstract>`_). Both **RT-tool** and **RT-synth** algorithms are based on the method presented in Bisbas et al. (`2017 <https://ui.adsabs.harvard.edu/abs/2017ApJ...850...23B/abstract>`_; `2021 <https://ui.adsabs.harvard.edu/abs/2021MNRAS.502.2701B/abstract>`_).
 
