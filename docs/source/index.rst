@@ -44,8 +44,8 @@ Welcome to the documentation of the ITAMOS project!
    :maxdepth: 3
    :caption: RT-synth:
 
-   RT-synth
-   RT-gallery
+   rt-synth/RT-synth
+   rt-synth/gallery
 
 
 Indices and tables
