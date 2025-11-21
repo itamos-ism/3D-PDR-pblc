@@ -17,7 +17,7 @@ Welcome to the documentation of the ITAMOS project!
    :maxdepth: 3
    :caption: RAYTHEIA:
 
-   ray-background
+   raytheia/raytheia
 
 .. toctree::
    :maxdepth: 3
