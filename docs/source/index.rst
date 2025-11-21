@@ -6,7 +6,7 @@
 Welcome to the documentation of the ITAMOS project!
 ===================================================
 
-.. toctree:
+.. toctree::
    :maxdepth: 3
    :caption: INTRODUCTION:
 
