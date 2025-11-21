@@ -1,5 +1,5 @@
-Background
-==========
+The RAYTHEIA algorithm
+======================
 
 RAYTHEIA is a high-performance reverse ray-tracing algorithm designed to efficiently solve three-dimensional direction-dependent equations in astronomical simulations. The algorithm is build on a uniform Cartesian grid combined with the HEALPix scheme for uniformly emanating rays across the celestial sphere.
 
