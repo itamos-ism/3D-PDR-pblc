@@ -5,7 +5,7 @@ Column density maps of a star-forming region. The snapshot is taken from the SIL
 
 Top left shows the column density of the total H-nucleus number density. The HI and H2 column densities are shown in the second and third paneil of the top row. Bottom row shows the column densities of the carbon cycle (C+, C, CO from left-to-right). The inset in the bottom right panel shows a close-up of the star-forming region. 
 
-.. figure:: ../images/column_densities.png
+.. figure:: ../images/column_densities_125.png
    :width: 98%
    :alt: Column density maps of a star-forming region
 
