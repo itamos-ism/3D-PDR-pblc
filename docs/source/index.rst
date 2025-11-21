@@ -24,8 +24,8 @@ Welcome to the documentation of the ITAMOS project!
    :caption: 3D-PDR:
 
    3d-pdr/3dpdr
-   gallery
-   installation
+   3d-pdr/gallery
+   3d-pdr/installation
    makefile
    params
    species
