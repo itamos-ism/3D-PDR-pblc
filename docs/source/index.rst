@@ -23,7 +23,7 @@ Welcome to the documentation of the ITAMOS project!
    :maxdepth: 3
    :caption: 3D-PDR:
 
-   3dpdr
+   3d-pdr/3dpdr
    gallery
    installation
    makefile
