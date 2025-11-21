@@ -6,6 +6,13 @@
 Welcome to the documentation of the ITAMOS project!
 ===================================================
 
+.. toctree:
+   :maxdepth: 3
+   :caption: INTRODUCTION:
+
+   introduction/pdrs
+   introduction/rt
+
 .. toctree::
    :maxdepth: 3
    :caption: RAYTHEIA:
@@ -16,7 +23,6 @@ Welcome to the documentation of the ITAMOS project!
    :maxdepth: 3
    :caption: 3D-PDR:
 
-   background
    3dpdr
    gallery
    installation
@@ -28,11 +34,15 @@ Welcome to the documentation of the ITAMOS project!
    examples
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Radiative Transfer:
+   :maxdepth: 3
+   :caption: RT-tool:
 
-   RT-background
    RT-tool
+
+.. toctree::
+   :maxdepth: 3
+   :caption: RT-synth:
+
    RT-synth
    RT-gallery
 
