@@ -8,11 +8,6 @@ Welcome to the documentation of the ITAMOS project!
 
 .. toctree::
    :maxdepth: 3
-
-   introduction/pdrs
-
-.. toctree::
-   :maxdepth: 3
    :caption: RAYTHEIA:
 
    ray-background
