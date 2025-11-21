@@ -37,7 +37,8 @@ Welcome to the documentation of the ITAMOS project!
    :maxdepth: 3
    :caption: RT-tool:
 
-   RT-tool
+   rt-tool/RT-tool
+   rt-tool/radex
 
 .. toctree::
    :maxdepth: 3
