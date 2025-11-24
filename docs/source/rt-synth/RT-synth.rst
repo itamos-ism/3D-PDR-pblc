@@ -84,7 +84,7 @@ Example
 
 The figure below shows an example FITS file generated with ``vel2fits.py`` and viewed with ``ds9``.
 
-.. figure:: images/ds9example.png
+.. figure:: ../images/ds9example.png
    :width: 98%
 
 See :ref:`RTgallery` for velocity integrated emission maps produced with **RT-synth**
