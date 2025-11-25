@@ -21,6 +21,7 @@ First section (compilers):
 * ``HDF5_LDLIBS``: Optional LDLIBS
 
 Second section (RT parameters):
++++++++++++++++++++++++++++++++
 
 * ``HDF5``: Flag to handle HDF5 files (1) or ascii files (0)
 * ``VELOCITY``: Set to 1 if velocity file exists (creates velocity-integrated maps)
