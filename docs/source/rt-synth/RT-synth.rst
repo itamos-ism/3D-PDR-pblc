@@ -8,7 +8,7 @@ Compilation Parameters
 
 Edit the ``makefile`` in ``RT-synth/``:
 
-First section:
+First section (compilers):
 
 * ``FC``: Fortran compiler (e.g., ``gfortran``)
 * ``HDF5_DIR``: Specify the hdf5 installation directory
@@ -19,7 +19,7 @@ First section:
 * ``HDF5_CFLAGS``: Optional CFLAGS
 * ``HDF5_LDLIBS``: Optional LDLIBS
 
-Second section:
+Second section (RT parameters):
 
 * ``HDF5``: Flag to handle HDF5 files (1) or ascii files (0)
 * ``VELOCITY``: Set to 1 if velocity file exists (creates velocity-integrated maps)
