@@ -9,6 +9,7 @@ Compilation Parameters
 Edit the ``makefile`` in ``RT-synth/``:
 
 First section (compilers):
+--------------------------
 
 * ``FC``: Fortran compiler (e.g., ``gfortran``)
 * ``HDF5_DIR``: Specify the hdf5 installation directory
